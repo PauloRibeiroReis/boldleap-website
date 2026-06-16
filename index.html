@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOLDLEAP — Estratégia. Tecnologia. Investimento.</title>
+  <meta name="description" content="BOLDLEAP — Consultoria estratégica, tecnologia, investimento e imobiliário. Lisboa, Portugal.">
+  <meta property="og:title" content="BOLDLEAP">
+  <meta property="og:description" content="Estratégia que transforma. Capital que multiplica.">
+  <meta property="og:url" content="https://boldleap.xyz">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* ========================================================
+       RESET & ROOT
+    ======================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:          #07071a;
+      --bg-2:        #0b0b22;
+      --card-bg:     rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.09);
+      --accent:      #00c8ff;
+      --accent2:     #7c3aed;
+      --gradient:    linear-gradient(135deg, #00c8ff 0%, #7c3aed 100%);
+      --green:       #10b981;
+      --orange:      #f59e0b;
+      --text:        #eef2f7;
+      --text-muted:  #7a85a3;
+      --white:       #ffffff;
+      --nav-h:       72px;
+      --radius:      20px;
+      --radius-sm:   12px;
+      --trans:       0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Global dot grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(0,200,255,0.055) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ========================================================
+       NAVIGATION
+    ======================================================== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      padding: 0 5%;
+      transition: background var(--trans), border-color var(--trans);
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(7,7,26,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-color: var(--card-border);
+    }
+    .nav-inner {
+      width: 100%; max-width: 1280px;
+      margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem;
+      letter-spacing: -0.02em; text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .logo-bold { color: var(--white); }
+    .logo-leap {
+      background: var(--gradient);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .logo-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gradient); flex-shrink: 0; }
+
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--text-muted); text-decoration: none; font-size: 0.9rem;
+      font-weight: 500; position: relative; transition: color var(--trans);
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1px; background: var(--gradient);
+      transform: scaleX(0); transition: transform var(--trans); transform-origin: left;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+
+    .lang-toggle {
+      display: flex; align-items: center;
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 8px; overflow: hidden;
+    }
+    .lang-btn {
+      padding: 6px 12px; cursor: pointer; color: var(--text-muted);
+      transition: all var(--trans); border: none; background: transparent;
+      font-family: inherit; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.05em;
+    }
+    .lang-btn.active { background: var(--gradient); color: white; }
+
+    .nav-cta {
+      background: var(--gradient); color: white; border: none;
+      padding: 10px 22px; border-radius: 50px; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; font-family: 'Inter', sans-serif; text-decoration: none;
+      transition: opacity var(--trans), transform var(--trans); white-space: nowrap;
+    }
+    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px; background: var(--text);
+      border-radius: 2px; transition: transform var(--trans), opacity var(--trans);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none; position: fixed; inset: 0; top: var(--nav-h);
+      background: rgba(7,7,26,0.97); backdrop-filter: blur(20px);
+      z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      color: var(--text); text-decoration: none; font-size: 1.8rem;
+      font-family: 'Syne', sans-serif; font-weight: 700; transition: color var(--trans);
+    }
+    .mobile-nav a:hover { color: var(--accent); }
+
+    /* ========================================================
+       HELPERS
+    ======================================================== */
+    section { position: relative; z-index: 1; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 5%; }
+    .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .section-badge {
+      display: inline-block; background: var(--card-bg); border: 1px solid var(--card-border);
+      color: var(--accent); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 16px; border-radius: 50px;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: var(--white);
+    }
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--card-border), transparent); margin: 0 5%; }
+
+    /* ========================================================
+       HERO
+    ======================================================== */
+    #home {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding-top: var(--nav-h);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ---- Parallax background image ---- */
+    .hero-bg {
+      position: absolute;
+      /* Extra size so it can shift without revealing edges */
+      inset: -40px;
+      background-image: url('images/lisboa-night.jpg');
+      background-size: cover;
+      background-position: center;
+      will-change: transform;
+      z-index: 0;
+    }
+
+    /* Gradient overlay for text readability */
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background:
+        linear-gradient(to right, rgba(7,7,26,0.90) 40%, rgba(7,7,26,0.55) 100%),
+        linear-gradient(to bottom, rgba(7,7,26,0.3) 0%, rgba(7,7,26,0.5) 100%);
+    }
+
+    .hero-inner {
+      position: relative; z-index: 2;
+      max-width: 1280px; margin: 0 auto; padding: 5rem 5%;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 4rem;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 8px 18px; border-radius: 50px;
+      font-size: 0.82rem; font-weight: 600; color: var(--text-muted);
+      margin-bottom: 1.5rem; animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s ease infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(.8); } }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: var(--white);
+      animation: fadeUp 0.6s 0.1s ease both; margin-bottom: 1.5rem;
+    }
+    .hero-sub {
+      font-size: 1.05rem; color: rgba(238,242,247,0.8); line-height: 1.75;
+      max-width: 500px; animation: fadeUp 0.6s 0.2s ease both; margin-bottom: 2.5rem;
+    }
+    .hero-btns {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn-primary {
+      background: var(--gradient); color: white; padding: 14px 30px; border-radius: 50px;
+      text-decoration: none; font-weight: 600; font-size: 0.95rem;
+      transition: opacity var(--trans), transform var(--trans), box-shadow var(--trans);
+      box-shadow: 0 0 30px rgba(0,200,255,0.3);
+    }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,200,255,0.45); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.08); color: var(--text); padding: 14px 30px; border-radius: 50px;
+      text-decoration: none; font-weight: 600; font-size: 0.95rem;
+      border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);
+      transition: all var(--trans);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* ---- Avatar (static, only float) ---- */
+    .hero-visual {
+      display: flex; justify-content: center; align-items: center;
+      position: relative; animation: fadeIn 0.8s 0.2s ease both;
+    }
+    .avatar-scene {
+      position: relative; width: 420px; height: 520px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .avatar-float { animation: avatarFloat 4.5s ease-in-out infinite; }
+    @keyframes avatarFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-18px); } }
+    .avatar-img {
+      width: 380px; height: auto; max-height: 480px;
+      object-fit: contain; position: relative; z-index: 2;
+      filter: drop-shadow(0 40px 80px rgba(0,200,255,0.18));
+    }
+    .avatar-ring {
+      position: absolute; border-radius: 50%;
+      border: 1px solid rgba(0,200,255,0.12);
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      z-index: 1; animation: ringPulse 5s ease-in-out infinite;
+    }
+    .avatar-ring:nth-child(1) { width: 380px; height: 380px; }
+    .avatar-ring:nth-child(2) { width: 440px; height: 440px; border-color: rgba(124,58,237,0.09); animation-delay: 1.5s; }
+    .avatar-ring:nth-child(3) { width: 500px; height: 500px; border-color: rgba(0,200,255,0.05); animation-delay: 3s; }
+    @keyframes ringPulse { 0%,100% { opacity:1; transform:translate(-50%,-50%) scale(1); } 50% { opacity:.5; transform:translate(-50%,-50%) scale(1.04); } }
+    .avatar-glow {
+      position: absolute; width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,200,255,0.1) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 0;
+    }
+
+    /* Floating chips */
+    .float-chip {
+      position: absolute; background: rgba(7,7,26,0.75); border: 1px solid var(--card-border);
+      backdrop-filter: blur(16px); border-radius: 12px; padding: 10px 14px;
+      font-size: 0.78rem; font-weight: 600; color: var(--text); white-space: nowrap;
+      z-index: 10; display: flex; align-items: center; gap: 8px;
+      animation: chipFloat 5s ease-in-out infinite;
+    }
+    .float-chip i { color: var(--accent); font-size: 1rem; }
+    .float-chip:nth-child(4) { top: 8%; right: -8%; animation-delay: 0s; }
+    .float-chip:nth-child(5) { bottom: 18%; left: -12%; animation-delay: 1.5s; }
+    .float-chip:nth-child(6) { top: 58%; right: -14%; animation-delay: 3s; }
+    @keyframes chipFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.5); font-size: 0.7rem; letter-spacing: 0.15em;
+      text-transform: uppercase; z-index: 2; animation: fadeUp 1s 0.8s ease both;
+    }
+    .scroll-hint-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--accent), transparent); animation: scrollLine 2s ease-in-out infinite; }
+    @keyframes scrollLine { 0% { opacity:0; transform:scaleY(0); transform-origin:top; } 50% { opacity:1; transform:scaleY(1); transform-origin:top; } 100% { opacity:0; transform:scaleY(1); transform-origin:bottom; } }
+
+    /* ========================================================
+       PERCURSO PROFISSIONAL
+    ======================================================== */
+    #percurso {
+      padding: 8rem 0 7rem;
+      background: var(--bg);
+      position: relative;
+    }
+    /* Subtle gradient accent top-right matching tech aesthetic */
+    #percurso::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    #percurso::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,200,255,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .percurso-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    /* 4 metrics in ONE row */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      margin-bottom: 4.5rem;
+    }
+    .metric-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); padding: 1.5rem 1rem; text-align: center;
+      transition: border-color var(--trans), transform var(--trans);
+      position: relative; overflow: hidden;
+    }
+    .metric-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--gradient); transform: scaleX(0); transition: transform var(--trans);
+      transform-origin: left;
+    }
+    .metric-card:hover { border-color: rgba(0,200,255,0.25); transform: translateY(-4px); }
+    .metric-card:hover::before { transform: scaleX(1); }
+    .metric-num {
+      font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800;
+      background: var(--gradient); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+      line-height: 1; margin-bottom: 0.5rem;
+    }
+    .metric-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; letter-spacing: 0.03em; line-height: 1.4; }
+
+    /* Main 2-column layout */
+    .percurso-main {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    /* Left: big avatar + links */
+    .percurso-avatar-col { position: sticky; top: 110px; }
+    .percurso-avatar-img {
+      width: 100%; height: auto;
+      border-radius: 24px;
+      filter: drop-shadow(0 30px 80px rgba(0,200,255,0.15));
+      display: block;
+    }
+    .percurso-avatar-links { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+    .percurso-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--accent); text-decoration: none; font-size: 0.88rem; font-weight: 600;
+      border: 1px solid rgba(0,200,255,0.2); padding: 11px 20px; border-radius: 50px;
+      transition: all var(--trans); justify-content: center;
+    }
+    .percurso-link:hover { background: rgba(0,200,255,0.08); border-color: var(--accent); transform: translateY(-2px); }
+
+    /* Right: text content */
+    .percurso-text-col { display: flex; flex-direction: column; gap: 1.6rem; }
+
+    .percurso-headline {
+      font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 800;
+      color: var(--white); line-height: 1.4;
+      padding-bottom: 1rem; border-bottom: 1px solid var(--card-border);
+    }
+
+    .percurso-para {
+      font-size: 0.97rem; color: var(--text-muted); line-height: 1.85;
+    }
+    .percurso-para strong { color: var(--text); }
+
+    /* Pillar items */
+    .percurso-pillars { display: flex; flex-direction: column; gap: 1.2rem; }
+    .pillar {
+      display: flex; gap: 1rem; align-items: flex-start;
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm); padding: 1.2rem 1.4rem;
+      transition: border-color var(--trans);
+    }
+    .pillar:hover { border-color: rgba(0,200,255,0.2); }
+    .pillar-icon { font-size: 1.5rem; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+    .pillar-body h4 { font-size: 0.9rem; font-weight: 700; color: var(--white); margin-bottom: 0.35rem; }
+    .pillar-body p  { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; }
+
+    .percurso-closing {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius-sm); padding: 1.2rem 1.4rem;
+      font-size: 0.95rem; color: var(--text); font-style: italic; line-height: 1.7;
+    }
+
+    /* Skills */
+    .skills-wrap { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 1.5rem; }
+    .skills-title { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+    .skills-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-chip {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09);
+      color: var(--text); font-size: 0.78rem; font-weight: 600;
+      padding: 5px 14px; border-radius: 50px; transition: all var(--trans);
+    }
+    .skill-chip:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,200,255,0.06); }
+
+    /* ========================================================
+       EMPRESA
+    ======================================================== */
+    #empresa { padding: 8rem 0; background: var(--bg-2); position: relative; z-index: 1; }
+
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .section-sub { margin-top: 1rem; font-size: 1rem; color: var(--text-muted); max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.75; }
+
+    .empresa-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+    .vertical-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); padding: 2.5rem;
+      transition: all var(--trans); position: relative; overflow: hidden;
+    }
+    .vertical-card::before {
+      content: ''; position: absolute; inset: 0; opacity: 0;
+      transition: opacity var(--trans); border-radius: var(--radius);
+    }
+    .vertical-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.35); }
+    .vertical-card:hover::before { opacity: 1; }
+    .vertical-card.blue  { --vc: rgba(0,200,255,0.3); }
+    .vertical-card.blue::before  { background: radial-gradient(circle at 50% 0%, rgba(0,200,255,0.06), transparent 60%); }
+    .vertical-card.violet{ --vc: rgba(124,58,237,0.3); }
+    .vertical-card.violet::before{ background: radial-gradient(circle at 50% 0%, rgba(124,58,237,0.06), transparent 60%); }
+    .vertical-card.orange{ --vc: rgba(245,158,11,0.3); }
+    .vertical-card.orange::before{ background: radial-gradient(circle at 50% 0%, rgba(245,158,11,0.06), transparent 60%); }
+    .vertical-card:hover { border-color: var(--vc); }
+
+    .card-icon-wrap { width: 58px; height: 58px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.5rem; }
+    .blue  .card-icon-wrap  { background: rgba(0,200,255,0.1); color: var(--accent); }
+    .violet .card-icon-wrap { background: rgba(124,58,237,0.1); color: var(--accent2); }
+    .orange .card-icon-wrap { background: rgba(245,158,11,0.1); color: var(--orange); }
+
+    .card-title { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: 0.8rem; }
+    .card-desc  { font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.5rem; }
+    .card-items { display: flex; flex-direction: column; gap: 0.5rem; }
+    .card-item  { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
+    .card-item-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+    .blue  .card-item-dot  { background: var(--accent); }
+    .violet .card-item-dot { background: var(--accent2); }
+    .orange .card-item-dot { background: var(--orange); }
+
+    /* ========================================================
+       CONTACTO
+    ======================================================== */
+    #contacto { padding: 8rem 0; }
+    .contacto-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start; }
+
+    .contacto-info { display: flex; flex-direction: column; gap: 2rem; }
+    .contacto-headline {
+      font-family: 'Syne', sans-serif; font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 800; line-height: 1.2; letter-spacing: -0.02em; color: var(--white);
+    }
+    .contacto-desc { font-size: 1rem; color: var(--text-muted); line-height: 1.8; }
+
+    .contact-channels { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-channel { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; color: var(--text-muted); }
+    .contact-channel a { color: var(--text); text-decoration: none; font-weight: 500; transition: color var(--trans); }
+    .contact-channel a:hover { color: var(--accent); }
+    .channel-icon {
+      width: 40px; height: 40px; border-radius: 10px; background: var(--card-bg);
+      border: 1px solid var(--card-border); display: flex; align-items: center;
+      justify-content: center; color: var(--accent); font-size: 1rem; flex-shrink: 0;
+    }
+
+    .social-row { display: flex; gap: 0.75rem; }
+    .social-btn {
+      width: 44px; height: 44px; border-radius: 12px; background: var(--card-bg);
+      border: 1px solid var(--card-border); display: flex; align-items: center;
+      justify-content: center; color: var(--text-muted); font-size: 1.1rem;
+      text-decoration: none; transition: all var(--trans);
+    }
+    .social-btn:hover { color: var(--accent); border-color: rgba(0,200,255,0.3); transform: translateY(-2px); }
+
+    /* Form */
+    .contact-form {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); padding: 2.5rem;
+      display: flex; flex-direction: column; gap: 1.2rem;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-label { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.03em; }
+    .form-input, .form-textarea, .form-select {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm); padding: 12px 16px; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: 0.9rem; width: 100%; outline: none;
+      transition: border-color var(--trans), box-shadow var(--trans);
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: rgba(0,200,255,0.4); box-shadow: 0 0 0 3px rgba(0,200,255,0.08);
+    }
+    .form-textarea { min-height: 130px; resize: vertical; }
+    .form-select option { background: #0d0d2b; }
+    .form-submit {
+      background: var(--gradient); color: white; border: none; padding: 14px 28px;
+      border-radius: 50px; font-size: 0.95rem; font-weight: 700; font-family: 'Inter', sans-serif;
+      cursor: pointer; transition: opacity var(--trans), transform var(--trans), box-shadow var(--trans);
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      box-shadow: 0 0 30px rgba(0,200,255,0.25);
+    }
+    .form-submit:hover { opacity: 0.85; transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,200,255,0.4); }
+    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .form-note { font-size: 0.78rem; color: var(--text-muted); text-align: center; }
+    .form-message { display: none; padding: 12px 16px; border-radius: var(--radius-sm); font-size: 0.88rem; font-weight: 600; text-align: center; }
+    .form-message.success { display: block; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); color: var(--green); }
+    .form-message.error   { display: block; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #f87171; }
+
+    /* ========================================================
+       FOOTER
+    ======================================================== */
+    footer {
+      position: relative; z-index: 1; border-top: 1px solid var(--card-border);
+      padding: 3rem 5%; background: rgba(7,7,26,0.5);
+    }
+    .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.82rem; color: var(--text-muted); }
+    .footer-copy a { color: var(--text-muted); text-decoration: none; }
+    .footer-copy a:hover { color: var(--accent); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.82rem; color: var(--text-muted); text-decoration: none; transition: color var(--trans); }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ========================================================
+       ANIMATIONS
+    ======================================================== */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
+
+    .reveal { opacity:0; transform:translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible  { opacity:1; transform:translateY(0); }
+    .reveal-delay-1  { transition-delay: 0.1s; }
+    .reveal-delay-2  { transition-delay: 0.2s; }
+    .reveal-delay-3  { transition-delay: 0.3s; }
+
+    /* ========================================================
+       RESPONSIVE
+    ======================================================== */
+    @media (max-width: 1100px) {
+      .percurso-main { grid-template-columns: 280px 1fr; gap: 3rem; }
+    }
+    @media (max-width: 900px) {
+      .percurso-main { grid-template-columns: 1fr; }
+      .percurso-avatar-col { position: static; display: flex; flex-direction: column; align-items: center; }
+      .percurso-avatar-img { max-width: 280px; }
+      .empresa-grid  { grid-template-columns: 1fr; }
+      .contacto-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .metrics-row   { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 2rem; text-align: center; padding: 3rem 5%; }
+      .hero-visual { order: -1; }
+      .avatar-scene { width: 260px; height: 320px; }
+      .avatar-img   { width: 240px; }
+      .avatar-ring  { display: none; }
+      .float-chip   { display: none; }
+      .hero-btns    { justify-content: center; }
+      .hero-sub     { margin: 0 auto 2rem; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 480px) {
+      .metrics-row { grid-template-columns: 1fr 1fr; }
+      :root { --nav-h: 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+============================================================ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="logo">
+      <div class="logo-dot"></div>
+      <span class="logo-bold">BOLD</span><span class="logo-leap">LEAP</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#home"     class="t" data-pt="Início"   data-en="Home">Início</a></li>
+      <li><a href="#percurso" class="t" data-pt="Percurso" data-en="Journey">Percurso</a></li>
+      <li><a href="#empresa"  class="t" data-pt="Empresa"  data-en="Company">Empresa</a></li>
+      <li><a href="#contacto" class="t" data-pt="Contacto" data-en="Contact">Contacto</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('pt')">PT</button>
+        <button class="lang-btn"        onclick="setLang('en')">EN</button>
+      </div>
+      <a href="#contacto" class="nav-cta t" data-pt="Falar Comigo" data-en="Get in Touch">Falar Comigo</a>
+      <button class="hamburger" id="hamburger" onclick="toggleMobile()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#home"      onclick="closeMobile()" class="t" data-pt="Início"   data-en="Home">Início</a>
+  <a href="#percurso"  onclick="closeMobile()" class="t" data-pt="Percurso" data-en="Journey">Percurso</a>
+  <a href="#empresa"   onclick="closeMobile()" class="t" data-pt="Empresa"  data-en="Company">Empresa</a>
+  <a href="#contacto"  onclick="closeMobile()" class="t" data-pt="Contacto" data-en="Contact">Contacto</a>
+</div>
+
+<!-- ============================================================
+     HERO  — background image parallax, avatar static
+============================================================ -->
+<section id="home">
+
+  <!--
+    INSTRUÇÃO: Coloca a foto de Lisboa à noite em: images/lisboa-night.jpg
+    Esta div é o fundo que se move com o cursor.
+  -->
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-inner">
+    <!-- Content -->
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        <span class="t" data-pt="Lisboa, Portugal · BOLDLEAP, Unipessoal Lda." data-en="Lisbon, Portugal · BOLDLEAP, Unipessoal Lda.">Lisboa, Portugal · BOLDLEAP, Unipessoal Lda.</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="lang-pt">Estratégia que&nbsp;<span class="gradient-text">transforma.</span><br>Capital que&nbsp;<span class="gradient-text">multiplica.</span></span>
+        <span class="lang-en" style="display:none">Strategy that&nbsp;<span class="gradient-text">transforms.</span><br>Capital that&nbsp;<span class="gradient-text">multiplies.</span></span>
+      </h1>
+
+      <p class="hero-sub">
+        <span class="lang-pt">Plataforma de consultoria estratégica, tecnologia de ponta e investimento ativo — fundada com a missão de criar valor duradouro em Portugal e no mundo.</span>
+        <span class="lang-en" style="display:none">A platform for strategic consulting, cutting-edge technology, and active investment — founded with the mission of creating lasting value in Portugal and worldwide.</span>
+      </p>
+
+      <div class="hero-btns">
+        <a href="#empresa"  class="btn-primary  t" data-pt="Explorar a Empresa" data-en="Explore Company">Explorar a Empresa</a>
+        <a href="#contacto" class="btn-secondary t" data-pt="Falar Comigo"       data-en="Get in Touch">Falar Comigo</a>
+      </div>
+    </div>
+
+    <!-- Avatar — static, only floats -->
+    <div class="hero-visual">
+      <div class="avatar-scene">
+        <div class="avatar-ring"></div>
+        <div class="avatar-ring"></div>
+        <div class="avatar-ring"></div>
+        <div class="avatar-glow"></div>
+
+        <div class="avatar-float">
+          <!--
+            INSTRUÇÃO: Substitui pelo caminho local após colocar o ficheiro em images/
+            <img src="images/paulo-avatar-3d.png" alt="Paulo Reis — BOLDLEAP" class="avatar-img">
+          -->
+          <img
+            src="images/paulo-avatar-3d.png"
+            alt="Paulo Reis — BOLDLEAP"
+            class="avatar-img"
+            onerror="this.src='https://www.familiareis.com/Paulo%20Professional%20Avatar.png'"
+          >
+        </div>
+
+        <!-- Floating chips -->
+        <div class="float-chip"><i class="fas fa-microchip"></i><span class="t" data-pt="Tecnologia & IA" data-en="Technology & AI">Tecnologia & IA</span></div>
+        <div class="float-chip"><i class="fas fa-chart-line"></i><span class="t" data-pt="Investimento" data-en="Investment">Investimento</span></div>
+        <div class="float-chip"><i class="fas fa-building"></i><span class="t" data-pt="Imobiliário" data-en="Real Estate">Imobiliário</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-hint-line"></div>
+    <span class="t" data-pt="Explorar" data-en="Explore">Explorar</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     PERCURSO PROFISSIONAL
+============================================================ -->
+<section id="percurso">
+  <div class="container">
+
+    <!-- Header: title only, no subtitle -->
+    <div class="percurso-header reveal">
+      <div class="section-badge t" data-pt="Percurso Profissional" data-en="Professional Journey">Percurso Profissional</div>
+      <h2 class="section-title">
+        <span class="lang-pt">30 anos de liderança. Uma visão <span class="gradient-text">única.</span></span>
+        <span class="lang-en" style="display:none">30 years of leadership. A <span class="gradient-text">unique</span> vision.</span>
+      </h2>
+    </div>
+
+    <!-- 4 metrics in one row -->
+    <div class="metrics-row reveal reveal-delay-1">
+      <div class="metric-card">
+        <div class="metric-num">30+</div>
+        <div class="metric-label t" data-pt="Anos de Experiência" data-en="Years of Experience">Anos de Experiência</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">15+</div>
+        <div class="metric-label t" data-pt="Países" data-en="Countries">Países</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">€100M+</div>
+        <div class="metric-label t" data-pt="Projetos Entregues" data-en="Projects Delivered">Projetos Entregues</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num"><span class="t" data-pt="Ativo" data-en="Active">Ativo</span></div>
+        <div class="metric-label t" data-pt="Investidor & Trader" data-en="Investor & Trader">Investidor & Trader</div>
+      </div>
+    </div>
+
+    <!-- Main: avatar left (big), text right -->
+    <div class="percurso-main">
+
+      <!-- LEFT: Avatar -->
+      <div class="percurso-avatar-col reveal">
+        <!--
+          INSTRUÇÃO: Usa a mesma imagem 3D do avatar (oval portrait).
+          Coloca o ficheiro em: images/paulo-avatar-3d.png
+        -->
+        <img
+          src="images/paulo-avatar-3d.png"
+          alt="Paulo Reis"
+          class="percurso-avatar-img"
+          onerror="this.src='https://www.familiareis.com/Paulo%20Professional%20Avatar.png'"
+        >
+        <div class="percurso-avatar-links">
+          <a href="https://www.linkedin.com/in/pauloribeiroreis" target="_blank" class="percurso-link">
+            <i class="fab fa-linkedin"></i> LinkedIn
+          </a>
+          <a href="https://calendly.com/pauloribeiroreis" target="_blank" class="percurso-link">
+            <i class="fas fa-calendar-alt"></i>
+            <span class="t" data-pt="Agendar Reunião" data-en="Schedule Meeting">Agendar Reunião</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Text -->
+      <div class="percurso-text-col">
+
+        <div class="percurso-headline reveal">
+          <span class="lang-pt">Transformar o Caos em Clareza: Liderança Global de Programas, Business Development &amp; Smart Cities</span>
+          <span class="lang-en" style="display:none">Transforming Chaos into Clarity: Global Program Leadership, Business Development &amp; Smart Cities</span>
+        </div>
+
+        <p class="percurso-para reveal reveal-delay-1">
+          <span class="lang-pt">Dizem que o verdadeiro carácter de um líder revela-se na tempestade. Como <strong>montanhista e gestor global de programas</strong>, aprendi que a montanha e os grandes projetos tecnológicos partilham a mesma regra de ouro: o sucesso não está apenas em atingir o cume — está em <strong>saber dançar com a imprevisibilidade do tempo e do mercado</strong>.</span>
+          <span class="lang-en" style="display:none">They say a leader's true nature is revealed in the storm. As a <strong>mountaineer and global program/project manager</strong>, I have learned that the mountain and large-scale tech projects share the same golden rule: success isn't just about reaching the summit — it is about <strong>knowing how to dance with the unpredictability of the weather — and the market</strong>.</span>
+        </p>
+
+        <p class="percurso-para reveal reveal-delay-1">
+          <span class="lang-pt">Com mais de <strong>30 anos de experiência internacional</strong> (Schréder, Itron, Silver Spring Networks), construí a minha carreira na intersecção da Estratégia Comercial, Gestão de Projetos e Engenharia de Soluções. Não vendo apenas tecnologia — vendo a <strong>resolução de problemas complexos que melhoram a vida das pessoas</strong>.</span>
+          <span class="lang-en" style="display:none">With over <strong>30 years of international experience</strong> (Schréder, Itron, Silver Spring Networks), I have built my career at the intersection of Commercial Strategy, Project Management and Solution Engineering. I don't just sell technology — I sell the <strong>resolution of complex problems that improve life</strong>.</span>
+        </p>
+
+        <!-- 4 pillars -->
+        <div class="percurso-pillars reveal reveal-delay-2">
+          <div class="pillar">
+            <div class="pillar-icon">🏔️</div>
+            <div class="pillar-body">
+              <h4 class="t" data-pt="Resiliência &amp; Navegação na Incerteza" data-en="Resilience &amp; Navigating Uncertainty">Resiliência &amp; Navegação na Incerteza</h4>
+              <p>
+                <span class="lang-pt">Tal como na montanha, nos projetos complexos de Smart Cities e IoT, o Plano A raramente sobrevive ao primeiro contacto com a realidade. A minha especialidade é a <strong>Gestão da Mudança</strong>: ajustar as velas, redefinir rotas e garantir que a equipa atinge o objetivo.</span>
+                <span class="lang-en" style="display:none">Just like on the mountain, in complex Smart Cities and IoT projects, Plan A rarely survives first contact with reality. My specialty is <strong>Change Management</strong>: adjusting the sails, redefining routes, and ensuring the team reaches the goal, regardless of the "weather."</span>
+              </p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🏙️</div>
+            <div class="pillar-body">
+              <h4 class="t" data-pt="Do Hardware ao Dado" data-en="From Hardware to Data">Do Hardware ao Dado</h4>
+              <p>
+                <span class="lang-pt">Liderar implementações em Paris, Copenhaga ou Austrália ensinou-me que o futuro não se trata apenas de hardware. São os <strong>Digital Twins, ML/IA e decisões data-driven</strong>. Hoje, foco-me em ajudar organizações a fazer a sua transformação com ML/IA e Cloud — tendo Cibersegurança e ESG como pilares fundamentais.</span>
+                <span class="lang-en" style="display:none">Leading solution deployments in Paris, Copenhagen, or Australia taught me that the future isn't just about hardware. It is about <strong>Digital Twins, ML/AI, and data-driven decisions</strong>. Today, my focus is on helping organizations transform using ML/AI and Cloud-based solutions — always with Cybersecurity and ESG in mind.</span>
+              </p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🌍</div>
+            <div class="pillar-body">
+              <h4 class="t" data-pt="Business Development Global" data-en="Global Business Development">Business Development Global</h4>
+              <p>
+                <span class="lang-pt">Sou um <strong>tradutor entre mundos</strong>. Traduzo a "linguagem técnica" para executivos e as necessidades de negócio para equipas de engenharia. Esta capacidade de alinhar expectativas foi crucial para fechar <strong>contratos estratégicos</strong> e liderar equipas multiculturais.</span>
+                <span class="lang-en" style="display:none">I am a <strong>translator between worlds</strong>. I translate "tech-speak" for executives and business needs for engineering teams. This ability to align expectations (Stakeholder Management) has been crucial for closing <strong>strategic contracts</strong> and leading multicultural teams.</span>
+              </p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">📈</div>
+            <div class="pillar-body">
+              <h4 class="t" data-pt="Investidor &amp; Trader Ativo" data-en="Active Investor &amp; Trader">Investidor &amp; Trader Ativo</h4>
+              <p>
+                <span class="lang-pt">Paralelamente à carreira tecnológica, sou um <strong>investidor ativo e trader nos mercados financeiros internacionais</strong>. Esta dimensão aplica a mesma disciplina da gestão de projetos: análise rigorosa, gestão de risco calculada e criação de valor sustentado a longo prazo.</span>
+                <span class="lang-en" style="display:none">Alongside my technology career, I am an <strong>active investor and trader in international financial markets</strong>. This dimension applies the same discipline as project management: rigorous analysis, calculated risk management, and long-term value creation.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Closing quote -->
+        <div class="percurso-closing reveal reveal-delay-2">
+          <span class="lang-pt">A vida não consiste em esperar que a tempestade passe. É aprender a dançar à chuva — e construir a infraestrutura que permite aos outros fazerem o mesmo.<br><br><strong>Vamos escalar o próximo desafio juntos?</strong></span>
+          <span class="lang-en" style="display:none">Life isn't about waiting for the storm to pass. It's about learning how to dance in the rain — and building the infrastructure that allows others to do the same.<br><br><strong>Shall we scale the next challenge together?</strong></span>
+        </div>
+
+        <!-- Skills -->
+        <div class="skills-wrap reveal reveal-delay-3">
+          <div class="skills-title t" data-pt="Competências-Chave" data-en="Core Skills">Competências-Chave</div>
+          <div class="skills-chips">
+            <span class="skill-chip">Smart Cities</span>
+            <span class="skill-chip">IoT</span>
+            <span class="skill-chip">AI & ML</span>
+            <span class="skill-chip">Digital Twins</span>
+            <span class="skill-chip">Business Development</span>
+            <span class="skill-chip">Programme Management</span>
+            <span class="skill-chip">Cibersegurança</span>
+            <span class="skill-chip">ESG</span>
+            <span class="skill-chip">Change Management</span>
+            <span class="skill-chip">Trading</span>
+            <span class="skill-chip t" data-pt="Gestão de Carteiras" data-en="Portfolio Management">Gestão de Carteiras</span>
+            <span class="skill-chip">Cloud & SaaS</span>
+            <span class="skill-chip">Blockchain</span>
+            <span class="skill-chip t" data-pt="Stakeholder Management" data-en="Stakeholder Management">Stakeholder Management</span>
+          </div>
+        </div>
+
+      </div><!-- /percurso-text-col -->
+    </div><!-- /percurso-main -->
+  </div><!-- /container -->
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     EMPRESA — VERTENTES
+============================================================ -->
+<section id="empresa">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge t" data-pt="As Nossas Vertentes" data-en="Our Areas">As Nossas Vertentes</div>
+      <h2 class="section-title">
+        <span class="lang-pt">Três eixos. Uma visão <span class="gradient-text">integrada.</span></span>
+        <span class="lang-en" style="display:none">Three pillars. One <span class="gradient-text">integrated</span> vision.</span>
+      </h2>
+      <p class="section-sub">
+        <span class="lang-pt">A BOLDLEAP opera em três vertentes complementares que se reforçam mutuamente, criando sinergias únicas para clientes e parceiros.</span>
+        <span class="lang-en" style="display:none">BOLDLEAP operates across three complementary pillars that reinforce each other, creating unique synergies for clients and partners.</span>
+      </p>
+    </div>
+    <div class="empresa-grid">
+      <!-- Card 1 -->
+      <div class="vertical-card blue reveal">
+        <div class="card-icon-wrap"><i class="fas fa-microchip"></i></div>
+        <div class="card-title t" data-pt="Tecnologia & Inteligência Artificial" data-en="Technology & Artificial Intelligence">Tecnologia & Inteligência Artificial</div>
+        <p class="card-desc">
+          <span class="lang-pt">Consultoria e implementação de soluções tecnológicas avançadas para organizações que querem liderar a transformação digital.</span>
+          <span class="lang-en" style="display:none">Consulting and implementation of advanced technology solutions for organizations that want to lead digital transformation.</span>
+        </p>
+        <div class="card-items">
+          <div class="card-item"><div class="card-item-dot"></div><span>Smart Cities & IoT</span></div>
+          <div class="card-item"><div class="card-item-dot"></div><span class="t" data-pt="Inteligência Artificial & ML" data-en="Artificial Intelligence & ML">Inteligência Artificial & ML</span></div>
+          <div class="card-item"><div class="card-item-dot"></div><span class="t" data-pt="Cibersegurança & ESG" data-en="Cybersecurity & ESG">Cibersegurança & ESG</span></div>
+          <div class="card-item"><div class="card-item-dot"></div><span class="t" data-pt="Infraestrutura Cloud & SaaS" data-en="Cloud Infrastructure & SaaS">Infraestrutura Cloud & SaaS</span></div>
+          <div class="card-item"><div class="card-item-dot"></div><span>Digital Twins</span></div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="vertical-card violet reveal reveal-delay-1">
+        <div class="card-icon-wrap"><i class="fas fa-chart-line"></i></div>
+        <div class="card-title t" data-pt="Investimento & Trading" data-en="Investment & Trading">Investimento & Trading</div>
+        <p class="card-desc">
+          <span class="lang-pt">Gestão ativa de capital nos mercados financeiros internacionais, combinada com uma abordagem estratégica a participações e oportunidades de longo prazo.</span>
+          <span class="lang-en" style="display:none">Active capital management in international financial markets, combined with a strategic approach to participations and long-term investment opportunities.</span>
+        </p>
+        <div class="card-items">
+          <div class="card-item"><div class="card-item-dot"></div><span class="t" data-pt="Trading em Mercados Financeiros" data-en="Financial Markets Trading">Trading em Mercados Financeiros</span></div>
+          <div class="card-item"><div class="card-item-dot"></div><span class="t" data-pt="Gestão de Carteiras" data-en="Portfolio Management">Gestão de Carteiras</span></div>
+          <div class="card-item"><div class="card-item-dot"></div><span class="t" data-pt="Participações Estratégicas" data-en="Strategic Participations">Participações Estratégicas</span></div>
+          <div class="card-item"><div class="card-item-dot"></div><span class="t" data-pt="Gestão Patrimonial" data-en="Asset Management">Gestão Patrimonial</span></div>
+          <div class="card-item"><div class="card-item-dot"></div><span class="t" data-pt="Análise Quantitativa" data-en="Quantitative Analysis">Análise Quantitativa</span></div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="vertical-card orange reveal reveal-delay-2">
+        <div class="card-icon-wrap"><i class="fas fa-building"></i></div>
+        <div class="card-title t" data-pt="Imobiliário & Construção" data-en="Real Estate & Construction">Imobiliário & Construção</div>
+        <p class="card-desc">
+          <span class="lang-pt">Compra, venda, arrendamento e desenvolvimento imobiliário em Portugal — com visão estratégica de valorização e uma abordagem moderna ao mercado.</span>
+          <span class="lang-en" style="display:none">Purchase, sale, rental, and real estate development in Portugal — with a strategic vision for asset appreciation and a modern approach to the market.</span>
+        </p>
+        <div class="card-items">
+          <div class="card-item"><div class="card-item-dot"></div><span class="t" data-pt="Compra & Venda de Imóveis" data-en="Property Purchase & Sale">Compra & Venda de Imóveis</span></div>
+          <div class="card-item"><div class="card-item-dot"></div><span class="t" data-pt="Arrendamento & Exploração" data-en="Rental & Exploitation">Arrendamento & Exploração</span></div>
+          <div class="card-item"><div class="card-item-dot"></div><span class="t" data-pt="Desenvolvimento & Construção" data-en="Development & Construction">Desenvolvimento & Construção</span></div>
+          <div class="card-item"><div class="card-item-dot"></div><span class="t" data-pt="Gestão de Imóveis" data-en="Property Management">Gestão de Imóveis</span></div>
+          <div class="card-item"><div class="card-item-dot"></div><span class="t" data-pt="Consultoria Imobiliária" data-en="Real Estate Consulting">Consultoria Imobiliária</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     CONTACTO
+============================================================ -->
+<section id="contacto">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-badge t" data-pt="Contacto" data-en="Contact">Contacto</div>
+      <h2 class="section-title">
+        <span class="lang-pt">Vamos <span class="gradient-text">trabalhar juntos.</span></span>
+        <span class="lang-en" style="display:none">Let's <span class="gradient-text">work together.</span></span>
+      </h2>
+    </div>
+    <div class="contacto-grid">
+      <div class="contacto-info reveal">
+        <h3 class="contacto-headline">
+          <span class="lang-pt">Pronto para o próximo desafio?</span>
+          <span class="lang-en" style="display:none">Ready for the next challenge?</span>
+        </h3>
+        <p class="contacto-desc">
+          <span class="lang-pt">Seja para uma parceria estratégica, um projeto de consultoria, uma oportunidade de investimento ou apenas para uma conversa — estou sempre disponível para explorar novas possibilidades.</span>
+          <span class="lang-en" style="display:none">Whether for a strategic partnership, a consulting project, an investment opportunity, or simply a conversation — I'm always available to explore new possibilities.</span>
+        </p>
+        <div class="contact-channels">
+          <div class="contact-channel">
+            <div class="channel-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:2px;">Email</div>
+              <a href="mailto:pauloribeiroreis@gmail.com">pauloribeiroreis@gmail.com</a>
+            </div>
+          </div>
+          <div class="contact-channel">
+            <div class="channel-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:2px;" class="t" data-pt="Localização" data-en="Location">Localização</div>
+              <span style="color:var(--text);font-weight:500;">Lisboa, Portugal</span>
+            </div>
+          </div>
+          <div class="contact-channel">
+            <div class="channel-icon"><i class="fas fa-globe"></i></div>
+            <div>
+              <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:2px;">Website</div>
+              <a href="https://boldleap.xyz" target="_blank">boldleap.xyz</a>
+            </div>
+          </div>
+        </div>
+        <div class="social-row">
+          <a href="https://www.linkedin.com/in/pauloribeiroreis" target="_blank" class="social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://calendly.com/pauloribeiroreis" target="_blank" class="social-btn" title="Calendly"><i class="fas fa-calendar-check"></i></a>
+          <a href="mailto:pauloribeiroreis@gmail.com" class="social-btn" title="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-1">
+        <!--
+          FORMSPREE: Regista-te em formspree.io (grátis) e substitui YOUR_FORM_ID pelo teu ID.
+          Enquanto não configurares, o botão abre o email com os dados pré-preenchidos.
+        -->
+        <form class="contact-form" id="contactForm"
+              action="https://formspree.io/f/YOUR_FORM_ID"
+              method="POST">
+          <input type="hidden" name="_subject" value="Novo contacto — BOLDLEAP">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label t" data-pt="Nome *" data-en="Name *">Nome *</label>
+              <input class="form-input" type="text" name="nome" required placeholder="Paulo Exemplo">
+            </div>
+            <div class="form-group">
+              <label class="form-label t" data-pt="Telefone" data-en="Phone">Telefone</label>
+              <input class="form-input" type="tel" name="telefone" placeholder="+351 9XX XXX XXX">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label t" data-pt="Email *" data-en="Email *">Email *</label>
+            <input class="form-input" type="email" name="email" required placeholder="nome@empresa.pt">
+          </div>
+          <div class="form-group">
+            <label class="form-label t" data-pt="Assunto *" data-en="Subject *">Assunto *</label>
+            <select class="form-select form-input" name="assunto" required>
+              <option value="" disabled selected>
+                <span class="lang-pt">Seleciona o assunto...</span>
+                <span class="lang-en" style="display:none">Select subject...</span>
+              </option>
+              <option value="Consultoria Tecnológica">Consultoria Tecnológica / Technology Consulting</option>
+              <option value="Investimento &amp; Trading">Investimento &amp; Trading / Investment &amp; Trading</option>
+              <option value="Imobiliário">Imobiliário / Real Estate</option>
+              <option value="Parceria Estratégica">Parceria Estratégica / Strategic Partnership</option>
+              <option value="Outro">Outro / Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label t" data-pt="Mensagem *" data-en="Message *">Mensagem *</label>
+            <textarea class="form-textarea" name="mensagem" required
+                      placeholder="Descreve a tua ideia, projeto ou questão..."></textarea>
+          </div>
+          <div class="form-message" id="formSuccess">
+            <span class="lang-pt">Mensagem enviada! Entrarei em contacto em breve.</span>
+            <span class="lang-en" style="display:none">Message sent! I will be in touch soon.</span>
+          </div>
+          <div class="form-message" id="formError">
+            <span class="lang-pt">Ocorreu um erro. Por favor tenta novamente ou envia email diretamente.</span>
+            <span class="lang-en" style="display:none">An error occurred. Please try again or send an email directly.</span>
+          </div>
+          <button type="submit" class="form-submit" id="submitBtn">
+            <i class="fas fa-paper-plane"></i>
+            <span class="t" data-pt="Enviar Mensagem" data-en="Send Message">Enviar Mensagem</span>
+          </button>
+          <p class="form-note">
+            <span class="lang-pt">Os teus dados são usados exclusivamente para responder ao teu contacto.</span>
+            <span class="lang-en" style="display:none">Your data is used exclusively to respond to your contact.</span>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">
+      <a href="#home" class="logo" style="text-decoration:none;margin-bottom:.5rem;display:inline-flex;font-size:1.2rem;">
+        <span class="logo-bold">BOLD</span><span class="logo-leap">LEAP</span>
+      </a><br>
+      <span style="margin-top:.4rem;display:inline-block;">
+        © 2025 BOLDLEAP, Unipessoal Lda. · NIPC 519427670 · Lisboa, Portugal
+      </span>
+    </div>
+    <div class="footer-links">
+      <a href="#home"      class="t" data-pt="Início"   data-en="Home">Início</a>
+      <a href="#percurso"  class="t" data-pt="Percurso" data-en="Journey">Percurso</a>
+      <a href="#empresa"   class="t" data-pt="Empresa"  data-en="Company">Empresa</a>
+      <a href="#contacto"  class="t" data-pt="Contacto" data-en="Contact">Contacto</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+  /* ——————————————————————————————
+     LANGUAGE TOGGLE
+  —————————————————————————————— */
+  let currentLang = 'pt';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.textContent.trim().toLowerCase() === lang) btn.classList.add('active');
+    });
+    document.querySelectorAll('.lang-pt').forEach(el => el.style.display = lang === 'pt' ? '' : 'none');
+    document.querySelectorAll('.lang-en').forEach(el => el.style.display = lang === 'en' ? '' : 'none');
+    document.querySelectorAll('.t[data-' + lang + ']').forEach(el => {
+      const val = el.getAttribute('data-' + lang);
+      if (val) el.textContent = val;
+    });
+    document.documentElement.lang = lang;
+  }
+
+  /* ——————————————————————————————
+     NAVBAR SCROLL
+  —————————————————————————————— */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  /* ——————————————————————————————
+     MOBILE NAV
+  —————————————————————————————— */
+  function toggleMobile() {
+    const nav = document.getElementById('mobileNav');
+    const btn = document.getElementById('hamburger');
+    nav.classList.toggle('open'); btn.classList.toggle('open');
+    document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+  }
+  function closeMobile() {
+    document.getElementById('mobileNav').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  /* ——————————————————————————————
+     HERO BACKGROUND PARALLAX
+     (background moves, avatar is static)
+  —————————————————————————————— */
+  const heroBg = document.getElementById('heroBg');
+  let bgTX = 0, bgTY = 0, bgCX = 0, bgCY = 0;
+
+  document.addEventListener('mousemove', e => {
+    const xRatio = (e.clientX / window.innerWidth  - 0.5); // -0.5 → 0.5
+    const yRatio = (e.clientY / window.innerHeight - 0.5);
+    bgTX = xRatio * 28;   // max ~14px left/right
+    bgTY = yRatio * 18;   // max ~9px up/down
+  });
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  (function animateBg() {
+    bgCX = lerp(bgCX, bgTX, 0.06);
+    bgCY = lerp(bgCY, bgTY, 0.06);
+    if (heroBg) heroBg.style.transform = `translate(${bgCX}px, ${bgCY}px)`;
+    requestAnimationFrame(animateBg);
+  })();
+
+  /* ——————————————————————————————
+     SCROLL REVEAL
+  —————————————————————————————— */
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* ——————————————————————————————
+     CONTACT FORM (Formspree AJAX)
+  —————————————————————————————— */
+  const form       = document.getElementById('contactForm');
+  const submitBtn  = document.getElementById('submitBtn');
+  const msgSuccess = document.getElementById('formSuccess');
+  const msgError   = document.getElementById('formError');
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    // Fallback: Formspree not yet configured → open mail client
+    if (form.action.includes('YOUR_FORM_ID')) {
+      const n = form.querySelector('[name="nome"]').value;
+      const em= form.querySelector('[name="email"]').value;
+      const t = form.querySelector('[name="telefone"]').value;
+      const s = form.querySelector('[name="assunto"]').value;
+      const m = form.querySelector('[name="mensagem"]').value;
+      const body = encodeURIComponent(`Nome: ${n}\nEmail: ${em}\nTelefone: ${t}\nAssunto: ${s}\n\nMensagem:\n${m}`);
+      window.location.href = `mailto:pauloribeiroreis@gmail.com?subject=BOLDLEAP%20-%20${encodeURIComponent(s)}&body=${body}`;
+      return;
+    }
+
+    submitBtn.disabled = true;
+    const btnLabel = submitBtn.querySelector('span');
+    const orig = btnLabel.textContent;
+    btnLabel.textContent = currentLang === 'pt' ? 'A enviar…' : 'Sending…';
+
+    try {
+      const res = await fetch(form.action, { method:'POST', body: new FormData(form), headers:{ Accept:'application/json' } });
+      if (res.ok) { msgSuccess.classList.add('success'); form.reset(); }
+      else         throw new Error();
+    } catch {
+      msgError.classList.add('error');
+    } finally {
+      submitBtn.disabled = false;
+      btnLabel.textContent = orig;
+      setTimeout(() => { msgSuccess.classList.remove('success'); msgError.classList.remove('error'); }, 6000);
+    }
+  });
+
+  /* ——————————————————————————————
+     ACTIVE NAV LINK
+  —————————————————————————————— */
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.style.color = (a.getAttribute('href') === '#' + cur) ? 'var(--accent)' : '';
+    });
+  });
+</script>
+
+</body>
+</html>
