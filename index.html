@@ -205,12 +205,12 @@
       z-index: 0;
     }
 
-    /* Gradient overlay */
+    /* Gradient overlay — reduzido para a foto Lisboa ser visível */
     .hero-overlay {
       position: absolute; inset: 0; z-index: 1;
       background:
-        linear-gradient(to right, rgba(28,32,40,0.92) 40%, rgba(28,32,40,0.60) 100%),
-        linear-gradient(to bottom, rgba(28,32,40,0.30) 0%, rgba(28,32,40,0.55) 100%);
+        linear-gradient(to right, rgba(28,32,40,0.72) 35%, rgba(28,32,40,0.28) 100%),
+        linear-gradient(to bottom, rgba(28,32,40,0.15) 0%, rgba(28,32,40,0.40) 100%);
     }
 
     .hero-inner {
@@ -291,18 +291,20 @@
       top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 0;
     }
 
-    /* Floating chips */
+    /* Floating chips — posicionados relativos a .hero-visual */
     .float-chip {
-      position: absolute; background: rgba(28,32,40,0.80); border: 1px solid var(--card-border);
+      position: absolute; background: rgba(28,32,40,0.82); border: 1px solid var(--card-border);
       backdrop-filter: blur(16px); border-radius: 12px; padding: 10px 14px;
       font-size: 0.78rem; font-weight: 600; color: var(--text); white-space: nowrap;
       z-index: 10; display: flex; align-items: center; gap: 8px;
       animation: chipFloat 5s ease-in-out infinite;
+      pointer-events: none;
     }
     .float-chip i { color: var(--accent); font-size: 1rem; }
-    .float-chip:nth-child(4) { top: 8%;  right: -8%;  animation-delay: 0s; }
-    .float-chip:nth-child(5) { bottom: 18%; left: -12%; animation-delay: 1.5s; }
-    .float-chip:nth-child(6) { top: 58%; right: -14%; animation-delay: 3s; }
+    /* Os chips são filhos diretos de .hero-visual */
+    .hero-visual .float-chip:nth-child(2) { top: 6%;   right: 2%;  animation-delay: 0s; }
+    .hero-visual .float-chip:nth-child(3) { bottom: 22%; left: 2%;  animation-delay: 1.5s; }
+    .hero-visual .float-chip:nth-child(4) { top: 62%;  right: 2%;  animation-delay: 3s; }
     @keyframes chipFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
 
     /* Scroll hint */
@@ -675,7 +677,7 @@
     </div>
 
     <!-- Avatar — static, only floats -->
-    <div class="hero-visual">
+    <div class="hero-visual" style="position:relative;">
       <div class="avatar-scene">
         <div class="avatar-ring"></div>
         <div class="avatar-ring"></div>
@@ -683,9 +685,6 @@
         <div class="avatar-glow"></div>
 
         <div class="avatar-float">
-          <!--
-            INSTRUÇÃO: Coloca o avatar 3D em: images/paulo-avatar-3d.png
-          -->
           <img
             src="images/Paulo%20Reis%20avatar%203d.png"
             alt="Paulo Reis — BOLDLEAP"
@@ -693,12 +692,12 @@
             onerror="this.src='images/Paulo%20Professional%20Avatar.png'"
           >
         </div>
-
-        <!-- Floating chips -->
-        <div class="float-chip"><i class="fas fa-microchip"></i><span class="t" data-pt="Tecnologia & IA" data-en="Technology & AI">Tecnologia & IA</span></div>
-        <div class="float-chip"><i class="fas fa-chart-line"></i><span class="t" data-pt="Investimento" data-en="Investment">Investimento</span></div>
-        <div class="float-chip"><i class="fas fa-building"></i><span class="t" data-pt="Imobiliário" data-en="Real Estate">Imobiliário</span></div>
       </div>
+
+      <!-- Floating chips — fora do avatar-scene, dentro de hero-visual -->
+      <div class="float-chip"><i class="fas fa-microchip"></i><span class="t" data-pt="Tecnologia & IA" data-en="Technology & AI">Tecnologia & IA</span></div>
+      <div class="float-chip"><i class="fas fa-chart-line"></i><span class="t" data-pt="Investimento" data-en="Investment">Investimento</span></div>
+      <div class="float-chip"><i class="fas fa-building"></i><span class="t" data-pt="Imobiliário" data-en="Real Estate">Imobiliário</span></div>
     </div>
   </div>
 
@@ -1077,34 +1076,32 @@
 <script>
   /* ——————————————————————————————
      1. PARTICLE NETWORK CANVAS
-     Covers the full page behind all sections.
-     Matches the familiareis.com professional page style:
-     teal dots + connecting lines on dark navy bg.
+     Teal neon glow network — igual a familiareis.com Professional.
+     Mais denso, mais brilhante, com efeito fluorescente.
   —————————————————————————————— */
   (function initParticles() {
     const canvas = document.getElementById('particles-bg');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    // Teal RGB matching familiareis.com --dsd-teal-rgb: 57,172,157
-    const R = 57, G = 172, B = 157;
+    // Teal neon — ligeiramente mais brilhante/cyan que o base
+    const R = 64, G = 220, B = 185;
 
     const CONFIG = {
-      count:   110,      // number of particles
-      maxDist: 170,      // max connection distance (px)
-      speed:   0.45,     // movement speed
-      dotMin:  1.2,
-      dotMax:  2.8,
+      count:   200,      // partículas (era 110)
+      maxDist: 210,      // distância máxima de ligação
+      speed:   0.40,
+      dotMin:  1.5,
+      dotMax:  3.2,
     };
 
     function resize() {
       canvas.width  = window.innerWidth;
-      canvas.height = document.documentElement.scrollHeight;
+      canvas.height = Math.max(document.documentElement.scrollHeight, window.innerHeight);
     }
     resize();
     window.addEventListener('resize', () => { resize(); respawn(); });
 
-    // Build particles spread across FULL page height
     let pts = [];
     function respawn() {
       pts = Array.from({ length: CONFIG.count }, () => ({
@@ -1120,30 +1117,41 @@
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw connection lines
+      // --- Linhas de ligação com glow ---
       for (let i = 0; i < pts.length; i++) {
         for (let j = i + 1; j < pts.length; j++) {
           const dx = pts[i].x - pts[j].x;
           const dy = pts[i].y - pts[j].y;
           const d  = Math.sqrt(dx * dx + dy * dy);
           if (d < CONFIG.maxDist) {
-            const alpha = (1 - d / CONFIG.maxDist) * 0.32;
+            const t     = 1 - d / CONFIG.maxDist;
+            const alpha = t * 0.55;
+            // Glow nas linhas próximas
+            if (t > 0.6) {
+              ctx.shadowBlur  = 6;
+              ctx.shadowColor = `rgba(${R},${G},${B},0.5)`;
+            }
             ctx.beginPath();
             ctx.strokeStyle = `rgba(${R},${G},${B},${alpha})`;
-            ctx.lineWidth   = 0.8;
+            ctx.lineWidth   = t * 1.2;
             ctx.moveTo(pts[i].x, pts[i].y);
             ctx.lineTo(pts[j].x, pts[j].y);
             ctx.stroke();
+            ctx.shadowBlur = 0;
           }
         }
       }
 
-      // Draw dots + move
+      // --- Dots com glow ---
       pts.forEach(p => {
+        // Glow exterior
+        ctx.shadowBlur  = 10;
+        ctx.shadowColor = `rgba(${R},${G},${B},0.6)`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${R},${G},${B},0.72)`;
+        ctx.fillStyle = `rgba(${R},${G},${B},0.92)`;
         ctx.fill();
+        ctx.shadowBlur = 0;
 
         p.x += p.vx;
         p.y += p.vy;
@@ -1155,8 +1163,7 @@
     }
     draw();
 
-    // Re-size canvas height on dynamic content load
-    setTimeout(() => { resize(); }, 600);
+    setTimeout(() => { resize(); }, 800);
   })();
 
   /* ——————————————————————————————
