@@ -205,12 +205,12 @@
       z-index: 0;
     }
 
-    /* Gradient overlay — reduzido para a foto Lisboa ser visível */
+    /* Gradient overlay — foto Lisboa bem visível */
     .hero-overlay {
       position: absolute; inset: 0; z-index: 1;
       background:
-        linear-gradient(to right, rgba(28,32,40,0.72) 35%, rgba(28,32,40,0.28) 100%),
-        linear-gradient(to bottom, rgba(28,32,40,0.15) 0%, rgba(28,32,40,0.40) 100%);
+        linear-gradient(to right, rgba(20,26,34,0.78) 30%, rgba(20,26,34,0.18) 100%),
+        linear-gradient(to bottom, rgba(20,26,34,0.08) 0%, rgba(20,26,34,0.30) 100%);
     }
 
     .hero-inner {
@@ -268,8 +268,8 @@
       position: relative; width: 420px; height: 520px;
       display: flex; align-items: center; justify-content: center;
     }
-    .avatar-float { animation: avatarFloat 4.5s ease-in-out infinite; }
-    @keyframes avatarFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-18px); } }
+    /* Avatar completamente parado — só o background se mexe com o rato */
+    .avatar-float { animation: none; }
     .avatar-img {
       width: 380px; height: auto; max-height: 480px;
       object-fit: contain; position: relative; z-index: 2;
@@ -291,21 +291,7 @@
       top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 0;
     }
 
-    /* Floating chips — posicionados relativos a .hero-visual */
-    .float-chip {
-      position: absolute; background: rgba(28,32,40,0.82); border: 1px solid var(--card-border);
-      backdrop-filter: blur(16px); border-radius: 12px; padding: 10px 14px;
-      font-size: 0.78rem; font-weight: 600; color: var(--text); white-space: nowrap;
-      z-index: 10; display: flex; align-items: center; gap: 8px;
-      animation: chipFloat 5s ease-in-out infinite;
-      pointer-events: none;
-    }
-    .float-chip i { color: var(--accent); font-size: 1rem; }
-    /* Os chips são filhos diretos de .hero-visual */
-    .hero-visual .float-chip:nth-child(2) { top: 6%;   right: 2%;  animation-delay: 0s; }
-    .hero-visual .float-chip:nth-child(3) { bottom: 22%; left: 2%;  animation-delay: 1.5s; }
-    .hero-visual .float-chip:nth-child(4) { top: 62%;  right: 2%;  animation-delay: 3s; }
-    @keyframes chipFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+    /* Chips removidos — design mais limpo e profissional */
 
     /* Scroll hint */
     .scroll-hint {
@@ -459,15 +445,17 @@
     .vertical-card.orange::before { background: radial-gradient(circle at 50% 0%, rgba(245,158,11,0.06), transparent 60%); }
     .vertical-card:hover { border-color: var(--vc); }
 
-    .card-icon-wrap { width: 58px; height: 58px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.5rem; }
+    /* Icon + título inline na mesma linha */
+    .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .card-icon-wrap { width: 58px; height: 58px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
     .blue   .card-icon-wrap { background: rgba(var(--teal-rgb),0.12); color: var(--accent); }
     .violet .card-icon-wrap { background: rgba(57,140,172,0.12); color: hsl(195,65%,52%); }
     .orange .card-icon-wrap { background: rgba(245,158,11,0.12); color: var(--orange); }
 
-    .card-title { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: 0.8rem; }
-    .card-desc  { font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.5rem; }
+    .card-title { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: 0; line-height: 1.3; }
+    .card-desc  { font-size: 1.06rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.5rem; }
     .card-items { display: flex; flex-direction: column; gap: 0.5rem; }
-    .card-item  { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
+    .card-item  { display: flex; align-items: center; gap: 10px; font-size: 0.98rem; color: var(--text-muted); font-weight: 500; }
     .card-item-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
     .blue   .card-item-dot { background: var(--accent); }
     .violet .card-item-dot { background: hsl(195,65%,52%); }
@@ -590,6 +578,8 @@
       .hero-sub     { margin: 0 auto 2rem; }
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
+      /* Pillars grelha — 1 coluna no mobile */
+      .percurso-pillars[style*="grid"] { grid-template-columns: 1fr !important; }
     }
     @media (max-width: 480px) {
       .metrics-row { grid-template-columns: 1fr 1fr; }
@@ -694,10 +684,6 @@
         </div>
       </div>
 
-      <!-- Floating chips — fora do avatar-scene, dentro de hero-visual -->
-      <div class="float-chip"><i class="fas fa-microchip"></i><span class="t" data-pt="Tecnologia & IA" data-en="Technology & AI">Tecnologia & IA</span></div>
-      <div class="float-chip"><i class="fas fa-chart-line"></i><span class="t" data-pt="Investimento" data-en="Investment">Investimento</span></div>
-      <div class="float-chip"><i class="fas fa-building"></i><span class="t" data-pt="Imobiliário" data-en="Real Estate">Imobiliário</span></div>
     </div>
   </div>
 
@@ -747,18 +733,23 @@
     <!-- Main: avatar left (large), text right -->
     <div class="percurso-main">
 
-      <!-- LEFT: Big avatar + links -->
+      <!-- LEFT: Avatar + quote + botões + competências -->
       <div class="percurso-avatar-col reveal">
-        <!--
-          INSTRUÇÃO: Coloca o avatar 3D em: images/paulo-avatar-3d.png
-        -->
         <img
           src="images/Paulo%20Professional%20Avatar.png"
           alt="Paulo Reis"
           class="percurso-avatar-img"
           onerror="this.src='images/Paulo%20Reis%20avatar%203d.png'"
         >
-        <div class="percurso-avatar-links">
+
+        <!-- (1) Quote por baixo do avatar -->
+        <div class="percurso-closing" style="margin-top:1.5rem;">
+          <span class="lang-pt">A vida não consiste em esperar que a tempestade passe. É aprender a dançar à chuva — e construir a infraestrutura que permite aos outros fazerem o mesmo.<br><br><strong>Vamos escalar o próximo desafio juntos?</strong></span>
+          <span class="lang-en" style="display:none">Life isn't about waiting for the storm to pass. It's about learning how to dance in the rain — and building the infrastructure that allows others to do the same.<br><br><strong>Shall we scale the next challenge together?</strong></span>
+        </div>
+
+        <!-- (1) Botões LinkedIn e Agendar Reunião -->
+        <div class="percurso-avatar-links" style="margin-top:1.25rem;">
           <a href="https://www.linkedin.com/in/pauloribeiroreis" target="_blank" class="percurso-link">
             <i class="fab fa-linkedin"></i> LinkedIn
           </a>
@@ -767,78 +758,9 @@
             <span class="t" data-pt="Agendar Reunião" data-en="Schedule Meeting">Agendar Reunião</span>
           </a>
         </div>
-      </div>
 
-      <!-- RIGHT: Text -->
-      <div class="percurso-text-col">
-
-        <div class="percurso-headline reveal">
-          <span class="lang-pt">Transformar o Caos em Clareza: Liderança Global de Programas, Business Development &amp; Smart Cities</span>
-          <span class="lang-en" style="display:none">Transforming Chaos into Clarity: Global Program Leadership, Business Development &amp; Smart Cities</span>
-        </div>
-
-        <p class="percurso-para reveal reveal-delay-1">
-          <span class="lang-pt">Dizem que o verdadeiro carácter de um líder revela-se na tempestade. Como <strong>montanhista e gestor global de programas</strong>, aprendi que a montanha e os grandes projetos tecnológicos partilham a mesma regra de ouro: o sucesso não está apenas em atingir o cume — está em <strong>saber dançar com a imprevisibilidade do tempo e do mercado</strong>.</span>
-          <span class="lang-en" style="display:none">They say a leader's true nature is revealed in the storm. As a <strong>mountaineer and global program/project manager</strong>, I have learned that the mountain and large-scale tech projects share the same golden rule: success isn't just about reaching the summit — it is about <strong>knowing how to dance with the unpredictability of the weather — and the market</strong>.</span>
-        </p>
-
-        <p class="percurso-para reveal reveal-delay-1">
-          <span class="lang-pt">Com mais de <strong>30 anos de experiência internacional</strong> (Schréder, Itron, Silver Spring Networks), construí a minha carreira na intersecção da Estratégia Comercial, Gestão de Projetos e Engenharia de Soluções. Não vendo apenas tecnologia — vendo a <strong>resolução de problemas complexos que melhoram a vida das pessoas</strong>.</span>
-          <span class="lang-en" style="display:none">With over <strong>30 years of international experience</strong> (Schréder, Itron, Silver Spring Networks), I have built my career at the intersection of Commercial Strategy, Project Management, and Solution Engineering. I don't just sell technology — I sell the <strong>resolution of complex problems that improve life</strong>.</span>
-        </p>
-
-        <!-- 4 pillars -->
-        <div class="percurso-pillars reveal reveal-delay-2">
-          <div class="pillar">
-            <div class="pillar-icon">🏔️</div>
-            <div class="pillar-body">
-              <h4 class="t" data-pt="Resiliência &amp; Navegação na Incerteza" data-en="Resilience &amp; Navigating Uncertainty">Resiliência &amp; Navegação na Incerteza</h4>
-              <p>
-                <span class="lang-pt">Tal como na montanha, nos projetos complexos de Smart Cities e IoT, o Plano A raramente sobrevive ao primeiro contacto com a realidade. A minha especialidade é a <strong>Gestão da Mudança</strong>: ajustar as velas, redefinir rotas e garantir que a equipa atinge o objetivo.</span>
-                <span class="lang-en" style="display:none">Just like on the mountain, in complex Smart Cities and IoT projects, Plan A rarely survives first contact with reality. My specialty is <strong>Change Management</strong>: adjusting the sails, redefining routes, and ensuring the team reaches the goal, regardless of the "weather."</span>
-              </p>
-            </div>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon">🏙️</div>
-            <div class="pillar-body">
-              <h4 class="t" data-pt="Do Hardware ao Dado" data-en="From Hardware to Data">Do Hardware ao Dado</h4>
-              <p>
-                <span class="lang-pt">Liderar implementações em Paris, Copenhaga ou Austrália ensinou-me que o futuro não se trata apenas de hardware. São os <strong>Digital Twins, ML/IA e decisões data-driven</strong>. Hoje, foco-me em ajudar organizações a fazer a sua transformação com ML/IA e Cloud — tendo Cibersegurança e ESG como pilares.</span>
-                <span class="lang-en" style="display:none">Leading solution deployments in Paris, Copenhagen, or Australia taught me that the future isn't just about hardware. It is about <strong>Digital Twins, ML/AI, and data-driven decisions</strong>. Today, my focus is on helping organizations transform using ML/AI and Cloud — with Cybersecurity and ESG always in mind.</span>
-              </p>
-            </div>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon">🌍</div>
-            <div class="pillar-body">
-              <h4 class="t" data-pt="Business Development Global" data-en="Global Business Development">Business Development Global</h4>
-              <p>
-                <span class="lang-pt">Sou um <strong>tradutor entre mundos</strong>: traduzo a "linguagem técnica" para executivos e as necessidades de negócio para equipas de engenharia. Esta capacidade de alinhar expectativas foi crucial para fechar <strong>contratos estratégicos</strong> e liderar equipas multiculturais.</span>
-                <span class="lang-en" style="display:none">I am a <strong>translator between worlds</strong>: I translate "tech-speak" for executives and business needs for engineering teams. This ability to align expectations has been crucial for closing <strong>strategic contracts</strong> and leading multicultural teams.</span>
-              </p>
-            </div>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon">📈</div>
-            <div class="pillar-body">
-              <h4 class="t" data-pt="Investidor &amp; Trader Ativo" data-en="Active Investor &amp; Trader">Investidor &amp; Trader Ativo</h4>
-              <p>
-                <span class="lang-pt">Paralelamente à carreira tecnológica, sou um <strong>investidor ativo e trader nos mercados financeiros internacionais</strong>. Esta dimensão aplica a mesma disciplina da gestão de projetos: análise rigorosa, gestão de risco calculada e criação de valor sustentado a longo prazo.</span>
-                <span class="lang-en" style="display:none">Alongside my technology career, I am an <strong>active investor and trader in international financial markets</strong>. This dimension applies the same project-management discipline: rigorous analysis, calculated risk management, and sustained long-term value creation.</span>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Closing quote -->
-        <div class="percurso-closing reveal reveal-delay-2">
-          <span class="lang-pt">A vida não consiste em esperar que a tempestade passe. É aprender a dançar à chuva — e construir a infraestrutura que permite aos outros fazerem o mesmo.<br><br><strong>Vamos escalar o próximo desafio juntos?</strong></span>
-          <span class="lang-en" style="display:none">Life isn't about waiting for the storm to pass. It's about learning how to dance in the rain — and building the infrastructure that allows others to do the same.<br><br><strong>Shall we scale the next challenge together?</strong></span>
-        </div>
-
-        <!-- Skills -->
-        <div class="skills-wrap reveal reveal-delay-3">
+        <!-- (3) Competências-Chave por baixo dos botões -->
+        <div class="skills-wrap" style="margin-top:1.25rem;">
           <div class="skills-title t" data-pt="Competências-Chave" data-en="Core Skills">Competências-Chave</div>
           <div class="skills-chips">
             <span class="skill-chip">Smart Cities</span>
@@ -857,9 +779,74 @@
             <span class="skill-chip">Stakeholder Management</span>
           </div>
         </div>
+      </div>
+
+      <!-- RIGHT: (2) Só headline + 2 parágrafos — as "caixas" (pillars) ficam no ecrã seguinte -->
+      <div class="percurso-text-col">
+
+        <div class="percurso-headline reveal">
+          <span class="lang-pt">Transformar o Caos em Clareza: Liderança Global de Programas, Business Development &amp; Smart Cities</span>
+          <span class="lang-en" style="display:none">Transforming Chaos into Clarity: Global Program Leadership, Business Development &amp; Smart Cities</span>
+        </div>
+
+        <p class="percurso-para reveal reveal-delay-1">
+          <span class="lang-pt">Dizem que o verdadeiro carácter de um líder revela-se na tempestade. Como <strong>montanhista e gestor global de programas</strong>, aprendi que a montanha e os grandes projetos tecnológicos partilham a mesma regra de ouro: o sucesso não está apenas em atingir o cume — está em <strong>saber dançar com a imprevisibilidade do tempo e do mercado</strong>.</span>
+          <span class="lang-en" style="display:none">They say a leader's true nature is revealed in the storm. As a <strong>mountaineer and global program/project manager</strong>, I have learned that the mountain and large-scale tech projects share the same golden rule: success isn't just about reaching the summit — it is about <strong>knowing how to dance with the unpredictability of the weather — and the market</strong>.</span>
+        </p>
+
+        <p class="percurso-para reveal reveal-delay-1">
+          <span class="lang-pt">Com mais de <strong>30 anos de experiência internacional</strong> (Schréder, Itron, Silver Spring Networks), construí a minha carreira na intersecção da Estratégia Comercial, Gestão de Projetos e Engenharia de Soluções. Não vendo apenas tecnologia — vendo a <strong>resolução de problemas complexos que melhoram a vida das pessoas</strong>.</span>
+          <span class="lang-en" style="display:none">With over <strong>30 years of international experience</strong> (Schréder, Itron, Silver Spring Networks), I have built my career at the intersection of Commercial Strategy, Project Management, and Solution Engineering. I don't just sell technology — I sell the <strong>resolution of complex problems that improve life</strong>.</span>
+        </p>
 
       </div><!-- /percurso-text-col -->
     </div><!-- /percurso-main -->
+
+    <!-- (2) Pillar BOXES visíveis no ecrã seguinte (após scroll) — grelha 2×2 -->
+    <div class="percurso-pillars reveal reveal-delay-1" style="display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem; margin-top:4rem;">
+      <div class="pillar">
+        <div class="pillar-icon">🏔️</div>
+        <div class="pillar-body">
+          <h4 class="t" data-pt="Resiliência &amp; Navegação na Incerteza" data-en="Resilience &amp; Navigating Uncertainty">Resiliência &amp; Navegação na Incerteza</h4>
+          <p>
+            <span class="lang-pt">Tal como na montanha, nos projetos complexos de Smart Cities e IoT, o Plano A raramente sobrevive ao primeiro contacto com a realidade. A minha especialidade é a <strong>Gestão da Mudança</strong>: ajustar as velas, redefinir rotas e garantir que a equipa atinge o objetivo.</span>
+            <span class="lang-en" style="display:none">Just like on the mountain, in complex Smart Cities and IoT projects, Plan A rarely survives first contact with reality. My specialty is <strong>Change Management</strong>: adjusting the sails, redefining routes, and ensuring the team reaches the goal.</span>
+          </p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🏙️</div>
+        <div class="pillar-body">
+          <!-- (4) Corrigido: "Do Hardware aos Dados" + novo texto -->
+          <h4 class="t" data-pt="Do Hardware aos Dados" data-en="From Hardware to Data">Do Hardware aos Dados</h4>
+          <p>
+            <span class="lang-pt">Liderar implementações em Paris, Copenhaga, EUA ou UK ensinou-me que o futuro não se trata apenas de hardware. São os <strong>Digital Twins, ML/IA e decisões data-driven</strong>. Hoje, foco-me em ajudar organizações a fazer a sua transformação com ML/IA e Cloud — tendo Cibersegurança e ESG como pilares.</span>
+            <span class="lang-en" style="display:none">Leading deployments in Paris, Copenhagen, the USA or the UK taught me that the future isn't just about hardware. It is about <strong>Digital Twins, ML/AI, and data-driven decisions</strong>. Today, my focus is on helping organizations transform with ML/AI and Cloud — with Cybersecurity and ESG as pillars.</span>
+          </p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🌍</div>
+        <div class="pillar-body">
+          <h4 class="t" data-pt="Business Development Global" data-en="Global Business Development">Business Development Global</h4>
+          <p>
+            <span class="lang-pt">Sou um <strong>tradutor entre mundos</strong>: traduzo a "linguagem técnica" para executivos e as necessidades de negócio para equipas de engenharia. Esta capacidade de alinhar expectativas foi crucial para fechar <strong>contratos estratégicos</strong> e liderar equipas multiculturais.</span>
+            <span class="lang-en" style="display:none">I am a <strong>translator between worlds</strong>: I translate "tech-speak" for executives and business needs for engineering teams. This ability to align expectations has been crucial for closing <strong>strategic contracts</strong> and leading multicultural teams.</span>
+          </p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">📈</div>
+        <div class="pillar-body">
+          <h4 class="t" data-pt="Investidor &amp; Trader Ativo" data-en="Active Investor &amp; Trader">Investidor &amp; Trader Ativo</h4>
+          <p>
+            <!-- (5) Novo texto investidor -->
+            <span class="lang-pt">Paralelamente à carreira tecnológica, sou um <strong>Business Angel, investidor e trader activo</strong>. Nesta dimensão aplico a mesma disciplina da gestão de projetos: análise rigorosa, gestão de risco calculada e criação de valor sustentado a longo prazo.</span>
+            <span class="lang-en" style="display:none">Alongside my technology career, I am a <strong>Business Angel, active investor and trader</strong>. In this dimension I apply the same project-management discipline: rigorous analysis, calculated risk management, and sustained long-term value creation.</span>
+          </p>
+        </div>
+      </div>
+    </div>
   </div><!-- /container -->
 </section>
 
@@ -884,8 +871,10 @@
     <div class="empresa-grid">
       <!-- Card 1 -->
       <div class="vertical-card blue reveal">
-        <div class="card-icon-wrap"><i class="fas fa-microchip"></i></div>
-        <div class="card-title t" data-pt="Tecnologia & Inteligência Artificial" data-en="Technology & Artificial Intelligence">Tecnologia & Inteligência Artificial</div>
+        <div class="card-header">
+          <div class="card-icon-wrap"><i class="fas fa-microchip"></i></div>
+          <div class="card-title t" data-pt="Tecnologia & Inteligência Artificial" data-en="Technology & Artificial Intelligence">Tecnologia & Inteligência Artificial</div>
+        </div>
         <p class="card-desc">
           <span class="lang-pt">Consultoria e implementação de soluções tecnológicas avançadas para organizações que querem liderar a transformação digital.</span>
           <span class="lang-en" style="display:none">Consulting and implementation of advanced technology solutions for organizations that want to lead digital transformation.</span>
@@ -900,8 +889,10 @@
       </div>
       <!-- Card 2 -->
       <div class="vertical-card violet reveal reveal-delay-1">
-        <div class="card-icon-wrap"><i class="fas fa-chart-line"></i></div>
-        <div class="card-title t" data-pt="Investimento & Trading" data-en="Investment & Trading">Investimento & Trading</div>
+        <div class="card-header">
+          <div class="card-icon-wrap"><i class="fas fa-chart-line"></i></div>
+          <div class="card-title t" data-pt="Investimento & Trading" data-en="Investment & Trading">Investimento & Trading</div>
+        </div>
         <p class="card-desc">
           <span class="lang-pt">Gestão ativa de capital nos mercados financeiros internacionais, combinada com uma abordagem estratégica a participações e oportunidades de longo prazo.</span>
           <span class="lang-en" style="display:none">Active capital management in international financial markets, combined with a strategic approach to participations and long-term investment opportunities.</span>
@@ -916,8 +907,10 @@
       </div>
       <!-- Card 3 -->
       <div class="vertical-card orange reveal reveal-delay-2">
-        <div class="card-icon-wrap"><i class="fas fa-building"></i></div>
-        <div class="card-title t" data-pt="Imobiliário & Construção" data-en="Real Estate & Construction">Imobiliário & Construção</div>
+        <div class="card-header">
+          <div class="card-icon-wrap"><i class="fas fa-building"></i></div>
+          <div class="card-title t" data-pt="Imobiliário & Construção" data-en="Real Estate & Construction">Imobiliário & Construção</div>
+        </div>
         <p class="card-desc">
           <span class="lang-pt">Compra, venda, arrendamento e desenvolvimento imobiliário em Portugal — com visão estratégica de valorização e uma abordagem moderna ao mercado.</span>
           <span class="lang-en" style="display:none">Purchase, sale, rental, and real estate development in Portugal — with a strategic vision for asset appreciation and a modern approach to the market.</span>
@@ -1084,15 +1077,15 @@
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    // Teal neon — ligeiramente mais brilhante/cyan que o base
-    const R = 64, G = 220, B = 185;
+    // Teal neon fluorescente — igual a familiareis.com Professional
+    const R = 72, G = 230, B = 195;   // cyan-teal brilhante
 
     const CONFIG = {
-      count:   200,      // partículas (era 110)
-      maxDist: 210,      // distância máxima de ligação
-      speed:   0.40,
-      dotMin:  1.5,
-      dotMax:  3.2,
+      count:   300,    // 300 partículas — rede muito densa
+      maxDist: 220,    // distância máxima de ligação
+      speed:   0.38,
+      dotMin:  1.6,
+      dotMax:  3.5,
     };
 
     function resize() {
@@ -1117,7 +1110,7 @@
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // --- Linhas de ligação com glow ---
+      // --- Linhas de ligação com glow fluorescente ---
       for (let i = 0; i < pts.length; i++) {
         for (let j = i + 1; j < pts.length; j++) {
           const dx = pts[i].x - pts[j].x;
@@ -1125,15 +1118,12 @@
           const d  = Math.sqrt(dx * dx + dy * dy);
           if (d < CONFIG.maxDist) {
             const t     = 1 - d / CONFIG.maxDist;
-            const alpha = t * 0.55;
-            // Glow nas linhas próximas
-            if (t > 0.6) {
-              ctx.shadowBlur  = 6;
-              ctx.shadowColor = `rgba(${R},${G},${B},0.5)`;
-            }
+            const alpha = t * 0.62;
+            ctx.shadowBlur  = t > 0.5 ? 8 : 2;
+            ctx.shadowColor = `rgba(${R},${G},${B},${t * 0.7})`;
             ctx.beginPath();
             ctx.strokeStyle = `rgba(${R},${G},${B},${alpha})`;
-            ctx.lineWidth   = t * 1.2;
+            ctx.lineWidth   = t * 1.4;
             ctx.moveTo(pts[i].x, pts[i].y);
             ctx.lineTo(pts[j].x, pts[j].y);
             ctx.stroke();
@@ -1142,14 +1132,13 @@
         }
       }
 
-      // --- Dots com glow ---
+      // --- Dots com glow neon ---
       pts.forEach(p => {
-        // Glow exterior
-        ctx.shadowBlur  = 10;
-        ctx.shadowColor = `rgba(${R},${G},${B},0.6)`;
+        ctx.shadowBlur  = 14;
+        ctx.shadowColor = `rgba(${R},${G},${B},0.75)`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${R},${G},${B},0.92)`;
+        ctx.fillStyle = `rgba(${R},${G},${B},0.95)`;
         ctx.fill();
         ctx.shadowBlur = 0;
 
