@@ -9,8 +9,9 @@
   <meta property="og:description" content="Estratégia que transforma. Capital que multiplica.">
   <meta property="og:url" content="https://boldleap.xyz">
   <meta property="og:image" content="https://boldleap.xyz/images/boldleap-logo.png">
-  <link rel="icon" type="image/png" href="images/boldleap-icon.png">
-  <link rel="apple-touch-icon" href="images/boldleap-icon.png">
+  <link rel="icon" type="image/png" href="images/boldleap-logo-transparente.png">
+  <link rel="shortcut icon" href="images/boldleap-logo-transparente.png">
+  <link rel="apple-touch-icon" href="images/boldleap-logo-transparente.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -351,23 +352,28 @@
     }
     .metric-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; letter-spacing: 0.03em; line-height: 1.4; }
 
-    /* Main 2-column layout */
+    /* Main 2-column × 2-row grid — alinha pillars com quote+competências */
     .percurso-main {
       display: grid;
       grid-template-columns: 360px 1fr;
-      gap: 4rem;
+      grid-template-rows: auto auto;
+      column-gap: 4rem;
+      row-gap: 2rem;
       align-items: start;
     }
 
-    /* Left: big avatar */
-    .percurso-avatar-col { position: sticky; top: 110px; }
+    /* Row 1 Col 1: avatar image */
+    .percurso-img-wrap { }
     .percurso-avatar-img {
       width: 100%; height: auto;
       border-radius: 24px;
       filter: drop-shadow(0 30px 80px rgba(var(--teal-rgb),0.20));
       display: block;
     }
-    .percurso-avatar-links { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+
+    /* Row 2 Col 1: quote + links + competências */
+    .percurso-avatar-lower { display: flex; flex-direction: column; gap: 1.25rem; }
+    .percurso-avatar-links { display: flex; flex-direction: column; gap: 0.75rem; }
     .percurso-link {
       display: inline-flex; align-items: center; gap: 10px;
       color: var(--accent); text-decoration: none; font-size: 0.88rem; font-weight: 600;
@@ -377,8 +383,17 @@
     }
     .percurso-link:hover { background: rgba(var(--teal-rgb),0.12); border-color: var(--accent); transform: translateY(-2px); }
 
-    /* Right: text */
-    .percurso-text-col { display: flex; flex-direction: column; gap: 1.6rem; }
+    /* Row 1 Col 2: headline + paragraphs */
+    .percurso-text-upper { display: flex; flex-direction: column; gap: 1.6rem; }
+
+    /* Row 2 Col 2: 4 pillars — stretch to fill same height as left cell */
+    .percurso-pillars {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 1.2rem;
+      align-self: stretch;
+    }
 
     .percurso-headline {
       font-family: 'Inter', sans-serif; font-size: 1.15rem; font-weight: 800;
@@ -610,7 +625,7 @@
 <nav id="navbar">
   <div class="nav-inner">
     <a href="#home" class="logo">
-      <img src="images/boldleap-icon.png" alt="" class="nav-logo-icon"
+      <img src="images/boldleap-logo-transparente.png" alt="" class="nav-logo-icon"
            onerror="this.style.display='none'"
            onload="this.nextElementSibling.style.display='none'">
       <div class="logo-dot"></div>
@@ -741,26 +756,48 @@
       </div>
     </div>
 
-    <!-- Main: avatar left (large), text right -->
+    <!-- Main: 2-col × 2-row grid — Row1:[avatar | texto], Row2:[quote+links+skills | 4 pillars] -->
     <div class="percurso-main">
 
-      <!-- LEFT: Avatar + quote + botões + competências -->
-      <div class="percurso-avatar-col reveal">
+      <!-- Row 1, Col 1: Avatar image -->
+      <div class="percurso-img-wrap reveal">
         <img
           src="images/Paulo%20Professional%20Avatar.png"
           alt="Paulo Reis"
           class="percurso-avatar-img"
           onerror="this.src='images/Paulo%20Reis%20avatar%203d.png'"
         >
+      </div>
 
-        <!-- (1) Quote por baixo do avatar -->
-        <div class="percurso-closing" style="margin-top:1.5rem;">
+      <!-- Row 1, Col 2: Headline + paragraphs -->
+      <div class="percurso-text-upper reveal">
+
+        <div class="percurso-headline">
+          <span class="lang-pt">Transformar o Caos em Clareza: Liderança Global de Programas, Business Development &amp; Smart Cities</span>
+          <span class="lang-en" style="display:none">Transforming Chaos into Clarity: Global Program Leadership, Business Development &amp; Smart Cities</span>
+        </div>
+
+        <p class="percurso-para">
+          <span class="lang-pt">Dizem que o verdadeiro carácter de um líder revela-se na tempestade. Como <strong>montanhista e gestor global de programas</strong>, aprendi que a montanha e os grandes projetos tecnológicos partilham a mesma regra de ouro: o sucesso não está apenas em atingir o cume — está em <strong>saber dançar com a imprevisibilidade do tempo e do mercado</strong>.</span>
+          <span class="lang-en" style="display:none">They say a leader's true nature is revealed in the storm. As a <strong>mountaineer and global program/project manager</strong>, I have learned that the mountain and large-scale tech projects share the same golden rule: success isn't just about reaching the summit — it is about <strong>knowing how to dance with the unpredictability of the weather — and the market</strong>.</span>
+        </p>
+
+        <p class="percurso-para">
+          <span class="lang-pt">Com mais de <strong>30 anos de experiência internacional</strong> (Schréder, Itron, Silver Spring Networks), construí a minha carreira na intersecção da Estratégia Comercial, Gestão de Projetos e Engenharia de Soluções. Não vendo apenas tecnologia — vendo a <strong>resolução de problemas complexos que melhoram a vida das pessoas</strong>.</span>
+          <span class="lang-en" style="display:none">With over <strong>30 years of international experience</strong> (Schréder, Itron, Silver Spring Networks), I have built my career at the intersection of Commercial Strategy, Project Management, and Solution Engineering. I don't just sell technology — I sell the <strong>resolution of complex problems that improve life</strong>.</span>
+        </p>
+
+      </div>
+
+      <!-- Row 2, Col 1: Quote + botões + competências -->
+      <div class="percurso-avatar-lower reveal">
+
+        <div class="percurso-closing">
           <span class="lang-pt">A vida não consiste em esperar que a tempestade passe. É aprender a dançar à chuva — e construir a infraestrutura que permite aos outros fazerem o mesmo.<br><br><strong>Vamos escalar o próximo desafio juntos?</strong></span>
           <span class="lang-en" style="display:none">Life isn't about waiting for the storm to pass. It's about learning how to dance in the rain — and building the infrastructure that allows others to do the same.<br><br><strong>Shall we scale the next challenge together?</strong></span>
         </div>
 
-        <!-- (1) Botões LinkedIn e Agendar Reunião -->
-        <div class="percurso-avatar-links" style="margin-top:1.25rem;">
+        <div class="percurso-avatar-links">
           <a href="https://www.linkedin.com/in/pauloribeiroreis" target="_blank" class="percurso-link">
             <i class="fab fa-linkedin"></i> LinkedIn
           </a>
@@ -770,8 +807,7 @@
           </a>
         </div>
 
-        <!-- (3) Competências-Chave por baixo dos botões -->
-        <div class="skills-wrap" style="margin-top:1.25rem;">
+        <div class="skills-wrap">
           <div class="skills-title t" data-pt="Competências-Chave" data-en="Core Skills">Competências-Chave</div>
           <div class="skills-chips">
             <span class="skill-chip">Smart Cities</span>
@@ -790,28 +826,11 @@
             <span class="skill-chip">Stakeholder Management</span>
           </div>
         </div>
+
       </div>
 
-      <!-- RIGHT: (2) Só headline + 2 parágrafos — as "caixas" (pillars) ficam no ecrã seguinte -->
-      <div class="percurso-text-col">
-
-        <div class="percurso-headline reveal">
-          <span class="lang-pt">Transformar o Caos em Clareza: Liderança Global de Programas, Business Development &amp; Smart Cities</span>
-          <span class="lang-en" style="display:none">Transforming Chaos into Clarity: Global Program Leadership, Business Development &amp; Smart Cities</span>
-        </div>
-
-        <p class="percurso-para reveal reveal-delay-1">
-          <span class="lang-pt">Dizem que o verdadeiro carácter de um líder revela-se na tempestade. Como <strong>montanhista e gestor global de programas</strong>, aprendi que a montanha e os grandes projetos tecnológicos partilham a mesma regra de ouro: o sucesso não está apenas em atingir o cume — está em <strong>saber dançar com a imprevisibilidade do tempo e do mercado</strong>.</span>
-          <span class="lang-en" style="display:none">They say a leader's true nature is revealed in the storm. As a <strong>mountaineer and global program/project manager</strong>, I have learned that the mountain and large-scale tech projects share the same golden rule: success isn't just about reaching the summit — it is about <strong>knowing how to dance with the unpredictability of the weather — and the market</strong>.</span>
-        </p>
-
-        <p class="percurso-para reveal reveal-delay-1">
-          <span class="lang-pt">Com mais de <strong>30 anos de experiência internacional</strong> (Schréder, Itron, Silver Spring Networks), construí a minha carreira na intersecção da Estratégia Comercial, Gestão de Projetos e Engenharia de Soluções. Não vendo apenas tecnologia — vendo a <strong>resolução de problemas complexos que melhoram a vida das pessoas</strong>.</span>
-          <span class="lang-en" style="display:none">With over <strong>30 years of international experience</strong> (Schréder, Itron, Silver Spring Networks), I have built my career at the intersection of Commercial Strategy, Project Management, and Solution Engineering. I don't just sell technology — I sell the <strong>resolution of complex problems that improve life</strong>.</span>
-        </p>
-
-        <!-- (2) 4 Pillar boxes AO LADO do avatar — grelha 2×2 na coluna direita -->
-        <div class="percurso-pillars reveal reveal-delay-2" style="display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem; margin-top:2rem;">
+      <!-- Row 2, Col 2: 4 Pillar boxes — alinhados com quote+competências à esquerda -->
+      <div class="percurso-pillars reveal reveal-delay-1">
           <div class="pillar">
             <div class="pillar-icon">🏔️</div>
             <div class="pillar-body">
@@ -854,7 +873,7 @@
           </div>
         </div>
 
-      </div><!-- /percurso-text-col -->
+      </div><!-- /percurso-pillars -->
     </div><!-- /percurso-main -->
 
   </div><!-- /container -->
