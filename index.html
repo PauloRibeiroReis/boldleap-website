@@ -8,10 +8,15 @@
   <meta property="og:title" content="BOLDLEAP">
   <meta property="og:description" content="Estratégia que transforma. Capital que multiplica.">
   <meta property="og:url" content="https://boldleap.xyz">
+  <meta property="og:image" content="https://boldleap.xyz/images/boldleap-logo.png">
+  <link rel="icon" type="image/png" href="images/boldleap-icon.png">
+  <link rel="apple-touch-icon" href="images/boldleap-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Formspree AJAX SDK — form submission -->
+  <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
   <style>
     /* ========================================================
        RESET & ROOT  —  Paleta familiareis.com Professional
@@ -27,7 +32,11 @@
       --accent:      hsl(172,50%,45%);   /* #39ac9d                      */
       --accent2:     hsl(172,65%,58%);   /* brighter teal                */
       --teal-rgb:    57,172,157;         /* for particle canvas          */
-      --gradient:    linear-gradient(135deg, hsl(172,50%,45%) 0%, hsl(195,65%,52%) 100%);
+      /* ── Purple: cor do logo BOLDLEAP ── */
+      --purple:      hsl(263,65%,47%);   /* #5B2DC4 — indigo-violeta     */
+      --purple-rgb:  91,45,196;
+      /* ── Gradiente principal: roxo → teal (DNA do logo) ── */
+      --gradient:    linear-gradient(135deg, hsl(263,65%,47%) 0%, hsl(172,55%,42%) 100%);
       /* ── Text ── */
       --text:        hsl(210,16%,96%);   /* #f0f4f8 — near-white         */
       --text-muted:  hsl(210,10%,68%);   /* #a0aab8 — muted grey-blue    */
@@ -94,6 +103,7 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .logo-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gradient); flex-shrink: 0; }
+    .nav-logo-icon { width: 34px; height: 34px; object-fit: contain; border-radius: 8px; flex-shrink: 0; }
 
     .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
     .nav-links a {
@@ -205,12 +215,12 @@
       z-index: 0;
     }
 
-    /* Gradient overlay — foto Lisboa bem visível */
+    /* Gradient overlay — foto Lisboa 50% mais visível */
     .hero-overlay {
       position: absolute; inset: 0; z-index: 1;
       background:
-        linear-gradient(to right, rgba(20,26,34,0.78) 30%, rgba(20,26,34,0.18) 100%),
-        linear-gradient(to bottom, rgba(20,26,34,0.08) 0%, rgba(20,26,34,0.30) 100%);
+        linear-gradient(to right, rgba(20,26,34,0.46) 28%, rgba(20,26,34,0.10) 100%),
+        linear-gradient(to bottom, rgba(20,26,34,0.04) 0%, rgba(20,26,34,0.16) 100%);
     }
 
     .hero-inner {
@@ -524,9 +534,10 @@
     .form-submit:hover { opacity: 0.85; transform: translateY(-2px); box-shadow: 0 0 50px rgba(var(--teal-rgb),0.45); }
     .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
     .form-note { font-size: 0.78rem; color: var(--text-muted); text-align: center; }
-    .form-message { display: none; padding: 12px 16px; border-radius: var(--radius-sm); font-size: 0.88rem; font-weight: 600; text-align: center; }
-    .form-message.success { display: block; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.30); color: var(--green); }
-    .form-message.error   { display: block; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.30); color: #f87171; }
+    .form-message { display: none; padding: 12px 16px; border-radius: var(--radius-sm); font-size: 0.88rem; font-weight: 600; text-align: center; margin-bottom: 1rem; }
+    /* Formspree SDK: oculta via inline style no init, mostra removendo o inline style → usar display:block por ID */
+    #formSuccess { display: block; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.30); color: var(--green); }
+    #formError   { display: block; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.30); color: #f87171; }
 
     /* ========================================================
        FOOTER
@@ -602,6 +613,9 @@
 <nav id="navbar">
   <div class="nav-inner">
     <a href="#home" class="logo">
+      <img src="images/boldleap-icon.png" alt="" class="nav-logo-icon"
+           onerror="this.style.display='none'"
+           onload="this.nextElementSibling.style.display='none'">
       <div class="logo-dot"></div>
       <span class="logo-bold">BOLD</span><span class="logo-leap">LEAP</span>
     </a>
@@ -799,54 +813,53 @@
           <span class="lang-en" style="display:none">With over <strong>30 years of international experience</strong> (Schréder, Itron, Silver Spring Networks), I have built my career at the intersection of Commercial Strategy, Project Management, and Solution Engineering. I don't just sell technology — I sell the <strong>resolution of complex problems that improve life</strong>.</span>
         </p>
 
+        <!-- (2) 4 Pillar boxes AO LADO do avatar — grelha 2×2 na coluna direita -->
+        <div class="percurso-pillars reveal reveal-delay-2" style="display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem; margin-top:2rem;">
+          <div class="pillar">
+            <div class="pillar-icon">🏔️</div>
+            <div class="pillar-body">
+              <h4 class="t" data-pt="Resiliência &amp; Navegação na Incerteza" data-en="Resilience &amp; Navigating Uncertainty">Resiliência &amp; Navegação na Incerteza</h4>
+              <p>
+                <span class="lang-pt">Tal como na montanha, nos projetos complexos de Smart Cities e IoT, o Plano A raramente sobrevive ao primeiro contacto com a realidade. A minha especialidade é a <strong>Gestão da Mudança</strong>: ajustar as velas, redefinir rotas e garantir que a equipa atinge o objetivo.</span>
+                <span class="lang-en" style="display:none">Just like on the mountain, in complex Smart Cities and IoT projects, Plan A rarely survives first contact with reality. My specialty is <strong>Change Management</strong>: adjusting the sails, redefining routes, and ensuring the team reaches the goal.</span>
+              </p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🏙️</div>
+            <div class="pillar-body">
+              <h4 class="t" data-pt="Do Hardware aos Dados" data-en="From Hardware to Data">Do Hardware aos Dados</h4>
+              <p>
+                <span class="lang-pt">Liderar implementações em Paris, Copenhaga, EUA ou UK ensinou-me que o futuro não se trata apenas de hardware. São os <strong>Digital Twins, ML/IA e decisões data-driven</strong>. Hoje, foco-me em ajudar organizações a fazer a sua transformação com ML/IA e Cloud — tendo Cibersegurança e ESG como pilares.</span>
+                <span class="lang-en" style="display:none">Leading deployments in Paris, Copenhagen, the USA or the UK taught me that the future isn't just about hardware. It is about <strong>Digital Twins, ML/AI, and data-driven decisions</strong>. Today, my focus is on helping organizations transform with ML/AI and Cloud — with Cybersecurity and ESG as pillars.</span>
+              </p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🌍</div>
+            <div class="pillar-body">
+              <h4 class="t" data-pt="Business Development Global" data-en="Global Business Development">Business Development Global</h4>
+              <p>
+                <span class="lang-pt">Sou um <strong>tradutor entre mundos</strong>: traduzo a "linguagem técnica" para executivos e as necessidades de negócio para equipas de engenharia. Esta capacidade de alinhar expectativas foi crucial para fechar <strong>contratos estratégicos</strong> e liderar equipas multiculturais.</span>
+                <span class="lang-en" style="display:none">I am a <strong>translator between worlds</strong>: I translate "tech-speak" for executives and business needs for engineering teams. This ability to align expectations has been crucial for closing <strong>strategic contracts</strong> and leading multicultural teams.</span>
+              </p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">📈</div>
+            <div class="pillar-body">
+              <h4 class="t" data-pt="Investidor &amp; Trader Ativo" data-en="Active Investor &amp; Trader">Investidor &amp; Trader Ativo</h4>
+              <p>
+                <span class="lang-pt">Paralelamente à carreira tecnológica, sou um <strong>Business Angel, investidor e trader activo</strong>. Nesta dimensão aplico a mesma disciplina da gestão de projetos: análise rigorosa, gestão de risco calculada e criação de valor sustentado a longo prazo.</span>
+                <span class="lang-en" style="display:none">Alongside my technology career, I am a <strong>Business Angel, active investor and trader</strong>. In this dimension I apply the same project-management discipline: rigorous analysis, calculated risk management, and sustained long-term value creation.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
       </div><!-- /percurso-text-col -->
     </div><!-- /percurso-main -->
 
-    <!-- (2) Pillar BOXES visíveis no ecrã seguinte (após scroll) — grelha 2×2 -->
-    <div class="percurso-pillars reveal reveal-delay-1" style="display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem; margin-top:4rem;">
-      <div class="pillar">
-        <div class="pillar-icon">🏔️</div>
-        <div class="pillar-body">
-          <h4 class="t" data-pt="Resiliência &amp; Navegação na Incerteza" data-en="Resilience &amp; Navigating Uncertainty">Resiliência &amp; Navegação na Incerteza</h4>
-          <p>
-            <span class="lang-pt">Tal como na montanha, nos projetos complexos de Smart Cities e IoT, o Plano A raramente sobrevive ao primeiro contacto com a realidade. A minha especialidade é a <strong>Gestão da Mudança</strong>: ajustar as velas, redefinir rotas e garantir que a equipa atinge o objetivo.</span>
-            <span class="lang-en" style="display:none">Just like on the mountain, in complex Smart Cities and IoT projects, Plan A rarely survives first contact with reality. My specialty is <strong>Change Management</strong>: adjusting the sails, redefining routes, and ensuring the team reaches the goal.</span>
-          </p>
-        </div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-icon">🏙️</div>
-        <div class="pillar-body">
-          <!-- (4) Corrigido: "Do Hardware aos Dados" + novo texto -->
-          <h4 class="t" data-pt="Do Hardware aos Dados" data-en="From Hardware to Data">Do Hardware aos Dados</h4>
-          <p>
-            <span class="lang-pt">Liderar implementações em Paris, Copenhaga, EUA ou UK ensinou-me que o futuro não se trata apenas de hardware. São os <strong>Digital Twins, ML/IA e decisões data-driven</strong>. Hoje, foco-me em ajudar organizações a fazer a sua transformação com ML/IA e Cloud — tendo Cibersegurança e ESG como pilares.</span>
-            <span class="lang-en" style="display:none">Leading deployments in Paris, Copenhagen, the USA or the UK taught me that the future isn't just about hardware. It is about <strong>Digital Twins, ML/AI, and data-driven decisions</strong>. Today, my focus is on helping organizations transform with ML/AI and Cloud — with Cybersecurity and ESG as pillars.</span>
-          </p>
-        </div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-icon">🌍</div>
-        <div class="pillar-body">
-          <h4 class="t" data-pt="Business Development Global" data-en="Global Business Development">Business Development Global</h4>
-          <p>
-            <span class="lang-pt">Sou um <strong>tradutor entre mundos</strong>: traduzo a "linguagem técnica" para executivos e as necessidades de negócio para equipas de engenharia. Esta capacidade de alinhar expectativas foi crucial para fechar <strong>contratos estratégicos</strong> e liderar equipas multiculturais.</span>
-            <span class="lang-en" style="display:none">I am a <strong>translator between worlds</strong>: I translate "tech-speak" for executives and business needs for engineering teams. This ability to align expectations has been crucial for closing <strong>strategic contracts</strong> and leading multicultural teams.</span>
-          </p>
-        </div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-icon">📈</div>
-        <div class="pillar-body">
-          <h4 class="t" data-pt="Investidor &amp; Trader Ativo" data-en="Active Investor &amp; Trader">Investidor &amp; Trader Ativo</h4>
-          <p>
-            <!-- (5) Novo texto investidor -->
-            <span class="lang-pt">Paralelamente à carreira tecnológica, sou um <strong>Business Angel, investidor e trader activo</strong>. Nesta dimensão aplico a mesma disciplina da gestão de projetos: análise rigorosa, gestão de risco calculada e criação de valor sustentado a longo prazo.</span>
-            <span class="lang-en" style="display:none">Alongside my technology career, I am a <strong>Business Angel, active investor and trader</strong>. In this dimension I apply the same project-management discipline: rigorous analysis, calculated risk management, and sustained long-term value creation.</span>
-          </p>
-        </div>
-      </div>
-    </div>
   </div><!-- /container -->
 </section>
 
@@ -982,9 +995,16 @@
       </div>
 
       <div class="reveal reveal-delay-1">
-        <!--
-          FORMSPREE: substitui YOUR_FORM_ID pelo ID real do teu formulário em formspree.io
-        -->
+        <!-- Mensagens Formspree SDK — FORA do form, controladas pelo SDK via data-fs-* -->
+        <div class="form-message" id="formSuccess" data-fs-success>
+          <span class="lang-pt">✓ Mensagem enviada! Entrarei em contacto em breve.</span>
+          <span class="lang-en" style="display:none">✓ Message sent! I will be in touch soon.</span>
+        </div>
+        <div class="form-message" id="formError" data-fs-error>
+          <span class="lang-pt">⚠ Ocorreu um erro. Por favor tenta novamente ou envia email diretamente.</span>
+          <span class="lang-en" style="display:none">⚠ An error occurred. Please try again or send an email directly.</span>
+        </div>
+
         <form class="contact-form" id="contactForm"
               action="https://formspree.io/f/xgobqnar"
               method="POST">
@@ -1001,7 +1021,7 @@
           </div>
           <div class="form-group">
             <label class="form-label t" data-pt="Email *" data-en="Email *">Email *</label>
-            <input class="form-input" type="email" name="email" required placeholder="nome@empresa.pt">
+            <input class="form-input" type="email" name="email" required placeholder="nome@empresa.pt" data-fs-field>
           </div>
           <div class="form-group">
             <label class="form-label t" data-pt="Assunto *" data-en="Subject *">Assunto *</label>
@@ -1016,18 +1036,10 @@
           </div>
           <div class="form-group">
             <label class="form-label t" data-pt="Mensagem *" data-en="Message *">Mensagem *</label>
-            <textarea class="form-textarea" name="mensagem" required
+            <textarea class="form-textarea" name="mensagem" required data-fs-field
                       placeholder="Descreve a tua ideia, projeto ou questão..."></textarea>
           </div>
-          <div class="form-message" id="formSuccess">
-            <span class="lang-pt">Mensagem enviada! Entrarei em contacto em breve.</span>
-            <span class="lang-en" style="display:none">Message sent! I will be in touch soon.</span>
-          </div>
-          <div class="form-message" id="formError">
-            <span class="lang-pt">Ocorreu um erro. Por favor tenta novamente ou envia email diretamente.</span>
-            <span class="lang-en" style="display:none">An error occurred. Please try again or send an email directly.</span>
-          </div>
-          <button type="submit" class="form-submit" id="submitBtn">
+          <button type="submit" class="form-submit" id="submitBtn" data-fs-submit-btn>
             <i class="fas fa-paper-plane"></i>
             <span class="t" data-pt="Enviar Mensagem" data-en="Send Message">Enviar Mensagem</span>
           </button>
@@ -1081,9 +1093,9 @@
     const R = 72, G = 230, B = 195;   // cyan-teal brilhante
 
     const CONFIG = {
-      count:   300,    // 300 partículas — rede muito densa
-      maxDist: 220,    // distância máxima de ligação
-      speed:   0.38,
+      count:   420,    // 420 partículas — rede muito densa e dinâmica
+      maxDist: 250,    // distância máxima de ligação — mais conexões
+      speed:   0.44,   // mais dinâmico
       dotMin:  1.6,
       dotMax:  3.5,
     };
@@ -1118,12 +1130,12 @@
           const d  = Math.sqrt(dx * dx + dy * dy);
           if (d < CONFIG.maxDist) {
             const t     = 1 - d / CONFIG.maxDist;
-            const alpha = t * 0.62;
-            ctx.shadowBlur  = t > 0.5 ? 8 : 2;
-            ctx.shadowColor = `rgba(${R},${G},${B},${t * 0.7})`;
+            const alpha = t * 0.75;
+            ctx.shadowBlur  = t > 0.4 ? 10 : 4;
+            ctx.shadowColor = `rgba(${R},${G},${B},${t * 0.85})`;
             ctx.beginPath();
             ctx.strokeStyle = `rgba(${R},${G},${B},${alpha})`;
-            ctx.lineWidth   = t * 1.4;
+            ctx.lineWidth   = t * 1.6;
             ctx.moveTo(pts[i].x, pts[i].y);
             ctx.lineTo(pts[j].x, pts[j].y);
             ctx.stroke();
@@ -1230,47 +1242,12 @@
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
   /* ——————————————————————————————
-     7. CONTACT FORM — Formspree AJAX
+     7. CONTACT FORM — Formspree SDK oficial
+     O CDN (@formspree/ajax) é carregado no <head> via defer.
+     Este padrão de fila garante que o init corre depois do SDK carregar.
   —————————————————————————————— */
-  const form      = document.getElementById('contactForm');
-  const submitBtn = document.getElementById('submitBtn');
-  const msgOK     = document.getElementById('formSuccess');
-  const msgErr    = document.getElementById('formError');
-
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-
-    // Fallback: Formspree not yet configured → open mail client
-    if (form.action.includes('YOUR_FORM_ID')) {
-      const n = form.querySelector('[name="nome"]').value;
-      const em= form.querySelector('[name="email"]').value;
-      const t = form.querySelector('[name="telefone"]').value;
-      const s = form.querySelector('[name="assunto"]').value;
-      const m = form.querySelector('[name="mensagem"]').value;
-      const b = encodeURIComponent(`Nome: ${n}\nEmail: ${em}\nTelefone: ${t}\nAssunto: ${s}\n\nMensagem:\n${m}`);
-      window.location.href = `mailto:pauloribeiroreis@gmail.com?subject=BOLDLEAP%20-%20${encodeURIComponent(s)}&body=${b}`;
-      return;
-    }
-
-    submitBtn.disabled = true;
-    const label = submitBtn.querySelector('span');
-    const orig  = label.textContent;
-    label.textContent = currentLang === 'pt' ? 'A enviar…' : 'Sending…';
-
-    try {
-      const res = await fetch(form.action, {
-        method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' }
-      });
-      if (res.ok) { msgOK.classList.add('success'); form.reset(); }
-      else          throw new Error();
-    } catch {
-      msgErr.classList.add('error');
-    } finally {
-      submitBtn.disabled = false;
-      label.textContent  = orig;
-      setTimeout(() => { msgOK.classList.remove('success'); msgErr.classList.remove('error'); }, 6000);
-    }
-  });
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#contactForm', formId: 'xgobqnar' });
 
   /* ——————————————————————————————
      8. ACTIVE NAV HIGHLIGHT
